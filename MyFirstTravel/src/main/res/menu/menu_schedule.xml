@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item_new_task"
+        android:title="@string/item_menu_new_task"
+        android:showAsAction="ifRoom"
+        android:orderInCategory="10"/>
+</menu>
