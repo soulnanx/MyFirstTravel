@@ -16,40 +16,43 @@ import br.com.epicdroid.travel.entity.Note;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
 
+    private int resource;
+
     public NoteAdapter(Context context, int resource, List<Note> items) {
         super(context, resource, items);
+        this.resource = resource;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+        ItemHolder itemHolder;
+        Note note = getItem(position);
 
-        if (v == null) {
-
-            LayoutInflater vi;
-            vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.item_note, null);
-
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(resource, null);
+            itemHolder = new ItemHolder(convertView, note);
+            convertView.setTag(itemHolder);
+        } else {
+            itemHolder = (ItemHolder) convertView.getTag();
         }
 
-        Note p = getItem(position);
+        if (note != null) {
+            itemHolder.description.setText(note.getDescription());
+            itemHolder.title.setText(note.getTitle());
+            itemHolder.note = note;
+        }
 
-        if (p != null) {
-
-            ItemHolder i = new ItemHolder(v);
-                i.description.setText(p.getDescription());
-                i.title.setText(p.getTitle());
-            }
-
-        return v;
+        return convertView;
     }
 
 
-    class ItemHolder{
+    public class ItemHolder{
         TextView title;
         TextView description;
+        public Note note;
 
-        ItemHolder(View view) {
+        ItemHolder(View view, Note note) {
+            this.note = note;
             this.title = (TextView) view.findViewById(R.id.item_txt_title);
             this.description = (TextView) view.findViewById(R.id.item_txt_descripion);
         }

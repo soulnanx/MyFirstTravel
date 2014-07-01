@@ -46,11 +46,11 @@ public class DialogCreateNote extends Dialog{
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Note annotation = new Note();
-                annotation.setDescription(uiHelper.description.getText().toString());
-                annotation.setTitle(uiHelper.title.getText().toString());
+                Note note = new Note();
+                note.setDescription(uiHelper.description.getText().toString());
+                note.setTitle(uiHelper.title.getText().toString());
 
-                adapter.store(annotation);
+                adapter.store(note);
                 fragment.setList();
                 DialogCreateNote.this.dismiss();
             }

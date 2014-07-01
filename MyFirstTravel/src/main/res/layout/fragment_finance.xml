@@ -3,12 +3,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:paddingLeft="7dp"
+              android:paddingRight="7dp">
 
-    <CheckBox
-            android:layout_width="wrap_content"
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New CheckBox"
-            android:id="@+id/checkBox"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+
+            android:weightSum="2">
+
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_blue_light"
+                android:text="Money"
+                android:layout_weight="1"
+                android:layout_gravity="left|center_vertical"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_blue_light"
+                android:text="0"
+                android:layout_weight="1"
+                android:id="@+id/txt_finance_money"
+                android:layout_gravity="right|center_vertical"/>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"/>
+
 </LinearLayout>
