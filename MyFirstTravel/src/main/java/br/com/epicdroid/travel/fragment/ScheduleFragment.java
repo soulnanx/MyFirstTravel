@@ -36,7 +36,7 @@ public class ScheduleFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_new_note:
-                new DialogCreateNote(ScheduleFragment.this.getActivity()).show();
+//                new DialogCreateNote(ScheduleFragment.this.getActivity()).show();
         }
 
         return super.onOptionsItemSelected(item);

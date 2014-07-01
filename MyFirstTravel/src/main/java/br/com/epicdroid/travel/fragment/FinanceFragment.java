@@ -36,7 +36,7 @@ public class FinanceFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_new_note:
-                new DialogCreateNote(FinanceFragment.this.getActivity()).show();
+//                new DialogCreateNote(FinanceFragment.this.getActivity()).show();
 
         }
 

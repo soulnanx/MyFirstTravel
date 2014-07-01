@@ -11,16 +11,19 @@ import com.codeslap.persistence.SqlAdapter;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.entity.Note;
+import br.com.epicdroid.travel.fragment.NoteFragment;
 
 public class DialogCreateNote extends Dialog{
 
     UIHelper uiHelper;
     SqlAdapter adapter;
     Context context;
+    NoteFragment fragment;
 
-    public DialogCreateNote(Context context) {
+    public DialogCreateNote(Context context, NoteFragment fragment) {
         super(context);
         this.context = context;
+        this.fragment = fragment;
         init();
         initEvents();
     }
@@ -48,6 +51,8 @@ public class DialogCreateNote extends Dialog{
                 annotation.setTitle(uiHelper.title.getText().toString());
 
                 adapter.store(annotation);
+                fragment.setList();
+                DialogCreateNote.this.dismiss();
             }
         };
     }
