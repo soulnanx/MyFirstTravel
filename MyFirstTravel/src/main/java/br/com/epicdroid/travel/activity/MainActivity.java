@@ -1,26 +1,24 @@
 package br.com.epicdroid.travel.activity;
 
-import java.util.Locale;
-
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
+
+import java.util.Locale;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.fragment.NoteFragment;
 import br.com.epicdroid.travel.fragment.FinanceFragment;
+import br.com.epicdroid.travel.fragment.NoteFragment;
+import br.com.epicdroid.travel.fragment.PlaceFragment;
 import br.com.epicdroid.travel.fragment.ScheduleFragment;
 
 public class MainActivity extends FragmentActivity {
 
-    SectionsPagerAdapter mSectionsPagerAdapter;
-
-    ViewPager mViewPager;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +39,15 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case NoteFragment.POSITION:
                     return new NoteFragment();
                 case FinanceFragment.POSITION:
                     return new FinanceFragment();
                 case ScheduleFragment.POSITION:
                     return new ScheduleFragment();
+                case PlaceFragment.POSITION:
+                    return new PlaceFragment();
             }
 
             return null;
@@ -56,7 +56,7 @@ public class MainActivity extends FragmentActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -70,6 +70,8 @@ public class MainActivity extends FragmentActivity {
                     return FinanceFragment.NAME_TAB.toUpperCase();
                 case ScheduleFragment.POSITION:
                     return ScheduleFragment.NAME_TAB.toUpperCase();
+                case PlaceFragment.POSITION:
+                    return PlaceFragment.NAME_TAB.toUpperCase();
 
             }
             return null;

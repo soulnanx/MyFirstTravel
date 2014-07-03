@@ -71,10 +71,10 @@ public class DialogCreateNote extends Dialog{
         LinearLayout btnCancel;
 
         public UIHelper(DialogCreateNote view) {
-            this.title = (EditText)view.findViewById(R.id.edt_title);
-            this.description = (EditText)view.findViewById(R.id.edt_description);
-            this.btnOK = (LinearLayout)view.findViewById(R.id.dialog_btn_ok);
-            this.btnCancel = (LinearLayout)view.findViewById(R.id.dialog_btn_cancel);
+            this.title = (EditText)view.findViewById(R.id.note_create_dialog_edt_title);
+            this.description = (EditText)view.findViewById(R.id.note_create_dialog_edt_description);
+            this.btnOK = (LinearLayout)view.findViewById(R.id.note_create_dialog_btn_ok);
+            this.btnCancel = (LinearLayout)view.findViewById(R.id.note_create_dialog_btn_cancel);
         }
     }
 

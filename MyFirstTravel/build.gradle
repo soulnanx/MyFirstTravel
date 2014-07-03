@@ -25,5 +25,6 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:13.0.0'
     compile 'com.codeslap:persistence:0.9.22'
+    compile 'com.google.android.gms:play-services:+'
 
 }

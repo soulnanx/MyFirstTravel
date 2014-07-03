@@ -7,7 +7,7 @@
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edt_title"
+            android:id="@+id/note_create_dialog_edt_title"
             android:layout_gravity="center"
             android:hint="@string/dialog_edt_title"
             android:layout_margin="7dp"/>
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/edt_description"
+            android:id="@+id/note_create_dialog_edt_description"
             android:layout_gravity="center"
             android:layout_margin="7dp"
             android:lines="4"
@@ -33,7 +33,7 @@
             android:baselineAligned="false">
 
         <LinearLayout
-                android:id="@+id/dialog_btn_cancel"
+                android:id="@+id/note_create_dialog_btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -52,7 +52,7 @@
 
         </LinearLayout>
         <LinearLayout
-                android:id="@+id/dialog_btn_ok"
+                android:id="@+id/note_create_dialog_btn_ok"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"

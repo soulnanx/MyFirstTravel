@@ -22,6 +22,7 @@ import java.util.List;
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.NoteAdapter;
 import br.com.epicdroid.travel.components.DialogCreateNote;
+import br.com.epicdroid.travel.components.DialogShowNote;
 import br.com.epicdroid.travel.entity.Note;
 
 public class NoteFragment extends Fragment {
@@ -93,8 +94,21 @@ public class NoteFragment extends Fragment {
         adapter = Persistence.getAdapter(NoteFragment.this.getActivity());
         listViewNotes = (ListView) view.findViewById(R.id.note_list);
         listViewNotes.setOnItemLongClickListener(eventOnLongClickNote());
+        listViewNotes.setOnItemClickListener(eventOnClickNote());
+//        listViewNotes.setOnItemClickListener(eventOnClickNote());
         setList();
     }
+
+    private AdapterView.OnItemClickListener eventOnClickNote() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                NoteFragment.this.noteSelected = ((NoteAdapter.ItemHolder) view.getTag()).note;
+                new DialogShowNote(NoteFragment.this.getActivity(), noteSelected).show();
+            }
+        };
+    }
+
 
     private AdapterView.OnItemLongClickListener eventOnLongClickNote() {
         return new AdapterView.OnItemLongClickListener() {
