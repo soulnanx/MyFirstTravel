@@ -23,6 +23,7 @@ import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.NoteAdapter;
 import br.com.epicdroid.travel.components.DialogCreateNote;
 import br.com.epicdroid.travel.components.DialogShowNote;
+import br.com.epicdroid.travel.components.DialogUpdateNote;
 import br.com.epicdroid.travel.entity.Note;
 
 public class NoteFragment extends Fragment {
@@ -76,7 +77,8 @@ public class NoteFragment extends Fragment {
                         mode.finish();
                         break;
                     case R.id.item_menu_note_edit:
-                        Toast.makeText(getActivity().getBaseContext(), "Selected Action2 ", Toast.LENGTH_LONG).show();
+                        updateNote();
+                        mode.finish();
                         break;
                 }
                 return false;
@@ -90,12 +92,15 @@ public class NoteFragment extends Fragment {
         setList();
     }
 
+    private void updateNote() {
+        new DialogUpdateNote(NoteFragment.this.getActivity(), NoteFragment.this, noteSelected).show();
+    }
+
     private void init() {
         adapter = Persistence.getAdapter(NoteFragment.this.getActivity());
         listViewNotes = (ListView) view.findViewById(R.id.note_list);
         listViewNotes.setOnItemLongClickListener(eventOnLongClickNote());
         listViewNotes.setOnItemClickListener(eventOnClickNote());
-//        listViewNotes.setOnItemClickListener(eventOnClickNote());
         setList();
     }
 
