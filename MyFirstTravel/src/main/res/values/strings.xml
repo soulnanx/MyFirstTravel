@@ -14,6 +14,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_edt_title">Title</string>
+    <string name="dialog_edt_value">Value</string>
     <string name="dialog_edt_description">Description</string>
     <string name="dialog_create_note_title">Create a new note</string>
     <string name="dialog_update_note_title">Update note</string>

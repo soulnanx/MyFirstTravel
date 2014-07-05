@@ -7,5 +7,5 @@ public class Debit {
     private long id;
     private String title;
     private BigDecimal value;
-    private boolean debited;
+//    private boolean debited;
 }
