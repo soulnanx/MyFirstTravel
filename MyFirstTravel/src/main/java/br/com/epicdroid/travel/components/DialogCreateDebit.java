@@ -9,8 +9,12 @@ import android.widget.LinearLayout;
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.SqlAdapter;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.NoteAdapter;
+import br.com.epicdroid.travel.entity.Debit;
 import br.com.epicdroid.travel.entity.Note;
 import br.com.epicdroid.travel.fragment.FinanceFragment;
 import br.com.epicdroid.travel.fragment.NoteFragment;
@@ -48,21 +52,26 @@ public class DialogCreateDebit extends Dialog{
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Note note = new Note();
-                note.setDescription(uiHelper.description.getText().toString());
-                note.setTitle(uiHelper.title.getText().toString());
-
-                adapter.store(note);
+                createDebit();
                 fragment.setList();
                 DialogCreateDebit.this.dismiss();
             }
         };
     }
 
+    private void createDebit() {
+        Debit debit = new Debit();
+        debit.setDescription(uiHelper.description.getText().toString());
+        debit.setTitle(uiHelper.title.getText().toString());
+        debit.setValue(uiHelper.value.getText().toString());
+
+        adapter.store(debit);
+    }
+
     private void init() {
         this.setContentView(R.layout.dialog_create_debit);
         uiHelper = new UIHelper(this);
-        this.setTitle(context.getString(R.string.dialog_create_note_title));
+        this.setTitle(context.getString(R.string.dialog_create_debit_title));
         adapter = Persistence.getAdapter(context);
     }
 

@@ -41,10 +41,19 @@ public class NoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_note, container, false);
-        setHasOptionsMenu(true);
+
         init();
         configureActionMode();
         return view;
+    }
+
+    private void init() {
+        setHasOptionsMenu(true);
+        adapter = Persistence.getAdapter(NoteFragment.this.getActivity());
+        listViewNotes = (ListView) view.findViewById(R.id.note_list);
+        listViewNotes.setOnItemLongClickListener(eventOnLongClickNote());
+        listViewNotes.setOnItemClickListener(eventOnClickNote());
+        setList();
     }
 
     private void configureActionMode() {
@@ -72,11 +81,11 @@ public class NoteFragment extends Fragment {
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
                 switch(item.getItemId()){
-                    case R.id.item_menu_note_delete:
+                    case R.id.item_menu_delete:
                         deleteNote();
                         mode.finish();
                         break;
-                    case R.id.item_menu_note_edit:
+                    case R.id.item_menu_edit:
                         updateNote();
                         mode.finish();
                         break;
@@ -94,14 +103,6 @@ public class NoteFragment extends Fragment {
 
     private void updateNote() {
         new DialogUpdateNote(NoteFragment.this.getActivity(), NoteFragment.this, noteSelected).show();
-    }
-
-    private void init() {
-        adapter = Persistence.getAdapter(NoteFragment.this.getActivity());
-        listViewNotes = (ListView) view.findViewById(R.id.note_list);
-        listViewNotes.setOnItemLongClickListener(eventOnLongClickNote());
-        listViewNotes.setOnItemClickListener(eventOnClickNote());
-        setList();
     }
 
     private AdapterView.OnItemClickListener eventOnClickNote() {

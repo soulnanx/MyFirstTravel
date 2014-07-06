@@ -85,14 +85,29 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@android:color/darker_gray"/>-->
+
+    <TextView
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="7dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:text="Debits"
+        android:id="@+id/textView" />
+
+    <View
+        android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/holo_blue_dark"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
         android:id="@+id/debit_list"
         android:layout_gravity="center_horizontal" />
 

@@ -13,7 +13,7 @@ public class app extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        DatabaseSpec database = PersistenceConfig.registerSpec(/**db version**/2);
+        DatabaseSpec database = PersistenceConfig.registerSpec(/**db version**/5);
         database.match(Note.class, Debit.class);
     }
 }

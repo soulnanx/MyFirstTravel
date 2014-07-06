@@ -11,13 +11,20 @@
     <string name="item_menu_new_task">+ task</string>
     <string name="item_menu_new_debit">+ debit</string>
 
+    <!-- COMMONS Dialog-->
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_edt_title">Title</string>
     <string name="dialog_edt_value">Value</string>
     <string name="dialog_edt_description">Description</string>
+
+    <!-- NOTE Dialog-->
     <string name="dialog_create_note_title">Create a new note</string>
     <string name="dialog_update_note_title">Update note</string>
+
+    <!-- DEBIT Dialog-->
+    <string name="dialog_create_debit_title">Create a new note</string>
+    <string name="dialog_update_debit_title">Update note</string>
 
 
 </resources>
