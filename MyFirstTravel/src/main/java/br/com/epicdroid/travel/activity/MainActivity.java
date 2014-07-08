@@ -14,6 +14,7 @@ import br.com.epicdroid.travel.fragment.FinanceFragment;
 import br.com.epicdroid.travel.fragment.NoteFragment;
 import br.com.epicdroid.travel.fragment.PlaceFragment;
 import br.com.epicdroid.travel.fragment.ScheduleFragment;
+import br.com.epicdroid.travel.fragment.TravelFragment;
 
 public class MainActivity extends FragmentActivity {
 
@@ -30,7 +31,6 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -40,6 +40,8 @@ public class MainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
+                case TravelFragment.POSITION:
+                    return new TravelFragment();
                 case NoteFragment.POSITION:
                     return new NoteFragment();
                 case FinanceFragment.POSITION:
@@ -55,8 +57,7 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 4;
+            return 5;
         }
 
         @Override
@@ -64,6 +65,8 @@ public class MainActivity extends FragmentActivity {
             Locale l = Locale.getDefault();
             invalidateOptionsMenu();
             switch (position) {
+                case TravelFragment.POSITION:
+                    return TravelFragment.NAME_TAB.toUpperCase();
                 case NoteFragment.POSITION:
                     return NoteFragment.NAME_TAB.toUpperCase();
                 case FinanceFragment.POSITION:

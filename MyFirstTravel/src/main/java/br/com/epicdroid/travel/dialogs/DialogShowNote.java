@@ -1,18 +1,13 @@
-package br.com.epicdroid.travel.components;
+package br.com.epicdroid.travel.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.codeslap.persistence.Persistence;
-import com.codeslap.persistence.SqlAdapter;
-
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.entity.Note;
-import br.com.epicdroid.travel.fragment.NoteFragment;
 
 public class DialogShowNote extends Dialog{
 

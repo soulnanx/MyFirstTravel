@@ -17,18 +17,16 @@ import android.widget.Toast;
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.SqlAdapter;
 
-import java.util.List;
-
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.NoteAdapter;
-import br.com.epicdroid.travel.components.DialogCreateNote;
-import br.com.epicdroid.travel.components.DialogShowNote;
-import br.com.epicdroid.travel.components.DialogUpdateNote;
+import br.com.epicdroid.travel.dialogs.DialogCreateNote;
+import br.com.epicdroid.travel.dialogs.DialogShowNote;
+import br.com.epicdroid.travel.dialogs.DialogUpdateNote;
 import br.com.epicdroid.travel.entity.Note;
 
 public class NoteFragment extends Fragment {
 
-    public static final int POSITION = 0;
+    public static final int POSITION = 1;
     public static final String NAME_TAB = "notes";
     private View view;
     private ListView listViewNotes;

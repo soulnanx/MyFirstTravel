@@ -19,17 +19,13 @@ import com.codeslap.persistence.SqlAdapter;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.DebitAdapter;
-import br.com.epicdroid.travel.adapter.NoteAdapter;
-import br.com.epicdroid.travel.components.DialogCreateDebit;
-import br.com.epicdroid.travel.components.DialogShowDebit;
-import br.com.epicdroid.travel.components.DialogShowNote;
-import br.com.epicdroid.travel.components.DialogUpdateNote;
+import br.com.epicdroid.travel.dialogs.DialogCreateDebit;
+import br.com.epicdroid.travel.dialogs.DialogShowDebit;
 import br.com.epicdroid.travel.entity.Debit;
-import br.com.epicdroid.travel.entity.Note;
 
 public class FinanceFragment extends Fragment {
 
-    public static final int POSITION = 1;
+    public static final int POSITION = 2;
     public static final String NAME_TAB = "finances";
 
     private UIHelper uiHelper;
@@ -42,11 +38,11 @@ public class FinanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_finance, container, false);
 
+
         init();
         configureActionMode();
         return view;
     }
-
     private void init() {
         setHasOptionsMenu(true);
 

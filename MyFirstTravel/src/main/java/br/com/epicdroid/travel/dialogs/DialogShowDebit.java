@@ -1,4 +1,4 @@
-package br.com.epicdroid.travel.components;
+package br.com.epicdroid.travel.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.entity.Debit;
-import br.com.epicdroid.travel.entity.Note;
 
 public class DialogShowDebit extends Dialog{
 

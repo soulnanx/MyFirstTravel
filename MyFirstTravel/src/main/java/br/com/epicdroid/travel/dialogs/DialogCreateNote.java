@@ -1,4 +1,4 @@
-package br.com.epicdroid.travel.components;
+package br.com.epicdroid.travel.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

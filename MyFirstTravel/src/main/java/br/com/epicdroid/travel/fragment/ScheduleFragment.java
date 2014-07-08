@@ -11,11 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.components.DialogCreateNote;
 
 public class ScheduleFragment extends Fragment {
 
-    public static final int POSITION = 2;
+    public static final int POSITION = 3;
     public static final String NAME_TAB = "schedules";
 
 

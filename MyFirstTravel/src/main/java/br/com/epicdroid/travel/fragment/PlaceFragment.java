@@ -4,28 +4,18 @@ package br.com.epicdroid.travel.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.codeslap.persistence.Persistence;
-import com.codeslap.persistence.SqlAdapter;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.adapter.NoteAdapter;
-import br.com.epicdroid.travel.components.DialogCreateNote;
-import br.com.epicdroid.travel.entity.Note;
 
 public class PlaceFragment extends Fragment {
 
-    public static final int POSITION = 3;
+    public static final int POSITION = 4;
     public static final String NAME_TAB = "places";
     private View view;
 
