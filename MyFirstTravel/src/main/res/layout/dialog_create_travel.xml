@@ -14,7 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
-        android:text="travel name" />
+        android:hint="travel name" />
 
     <EditText
         android:id="@+id/travel_create_dialog_edt_money"
@@ -25,44 +25,30 @@
         android:layout_marginBottom="7dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text="money" />
+        android:hint="money" />
 
-    <!--<EditText-->
-        <!--android:id="@+id/travel_create_dialog_edt_start_travel"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginTop="7dp"-->
-        <!--android:layout_marginBottom="7dp"-->
-        <!--android:ems="10"-->
-        <!--android:inputType="date"-->
-        <!--android:text="start travel" />-->
-    <TimePicker
+    <TextView
         android:id="@+id/travel_create_dialog_edt_start_travel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
-        android:layout_gravity="center_horizontal"
-        />
+        android:ems="10"
+        android:textSize="18sp"
+        android:hint="start travel" />
 
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginTop="7dp"-->
-        <!--android:layout_marginBottom="7dp"-->
-        <!--android:ems="10"-->
-        <!--android:inputType="date"-->
-        <!--android:text="end travel" />-->
-
-    <TimePicker
+    <TextView
         android:id="@+id/travel_create_dialog_edt_finish_travel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
-        android:layout_gravity="center_horizontal"/>
+        android:ems="10"
+        android:textSize="18sp"
+        android:inputType="date"
+        android:hint="end travel" />
 
     <LinearLayout
         android:layout_width="match_parent"

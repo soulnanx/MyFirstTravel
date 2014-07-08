@@ -6,11 +6,14 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
-public class DialogDatePicker extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener {
+import br.com.epicdroid.travel.delegate.DelegateDateModal;
+
+public abstract class DialogDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -25,6 +28,8 @@ public class DialogDatePicker extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the user
+        setDate(year, month, day);
     }
+
+    public abstract void setDate(int year, int month, int day);
 }
