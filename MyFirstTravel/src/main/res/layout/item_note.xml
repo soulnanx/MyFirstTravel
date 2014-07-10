@@ -11,9 +11,8 @@
             android:layout_height="wrap_content"
             android:text="title"
             android:textColor="@android:color/holo_blue_light"
-            android:textStyle="bold"
             android:id="@+id/item_txt_title"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:layout_marginRight="7dp"/>
 
     <TextView
@@ -22,5 +21,6 @@
             android:text="description"
             android:id="@+id/item_txt_descripion"
             android:ellipsize="end"
+        android:textSize="15sp"
             android:lines="1"/>
 </LinearLayout>

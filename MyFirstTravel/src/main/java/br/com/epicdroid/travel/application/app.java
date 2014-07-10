@@ -9,13 +9,14 @@ import br.com.epicdroid.travel.entity.Note;
 import br.com.epicdroid.travel.entity.Debit;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.entity.Task;
+import br.com.epicdroid.travel.entity.Travel;
 
 public class app extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        DatabaseSpec database = PersistenceConfig.registerSpec(/**db version**/6);
-        database.match(Note.class, Debit.class, Place.class, Task.class);
+        DatabaseSpec database = PersistenceConfig.registerSpec(7);
+        database.match(Note.class, Debit.class, Place.class, Task.class, Travel.class);
     }
 }

@@ -12,6 +12,8 @@ import android.widget.TimePicker;
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.SqlAdapter;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import br.com.epicdroid.travel.R;
@@ -26,6 +28,7 @@ public class DialogCreateTravel extends Dialog{
     SqlAdapter adapter;
     Context context;
     TravelFragment fragment;
+    Travel travel;
 
     public DialogCreateTravel(Context context, TravelFragment fragment) {
         super(context);
@@ -40,6 +43,7 @@ public class DialogCreateTravel extends Dialog{
         uiHelper = new UIHelper(this);
         this.setTitle(context.getString(R.string.dialog_create_debit_title));
         adapter = Persistence.getAdapter(context);
+        travel = new Travel();
     }
 
     private void initEvents() {
@@ -55,10 +59,10 @@ public class DialogCreateTravel extends Dialog{
             public void onClick(final View view) {
                 new DialogDatePicker() {
                     @Override
-                    public void setDate(int year, int month, int day) {
-                        ((TextView)view).setText(year + "-" + month + "-" + day);
+                    public void setDate(Calendar c) {
+                        ((TextView)view).setText(new SimpleDateFormat("dd MMM yyyy").format(c.getTime()).toUpperCase());
                     }
-                }.show(fragment.getActivity().getFragmentManager(), "tes");
+                }.show(fragment.getActivity().getFragmentManager(), "");
             }
         };
     }

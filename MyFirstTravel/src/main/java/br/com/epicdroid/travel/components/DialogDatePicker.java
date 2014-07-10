@@ -28,8 +28,10 @@ public abstract class DialogDatePicker extends DialogFragment implements DatePic
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        setDate(year, month, day);
+        Calendar c = Calendar.getInstance();
+        c.set(year, month, day);
+        setDate(c);
     }
 
-    public abstract void setDate(int year, int month, int day);
+    public abstract void setDate(Calendar c);
 }

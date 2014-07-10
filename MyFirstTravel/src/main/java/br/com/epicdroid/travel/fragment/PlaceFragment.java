@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 import br.com.epicdroid.travel.R;
 
 public class PlaceFragment extends Fragment {
@@ -18,6 +20,7 @@ public class PlaceFragment extends Fragment {
     public static final int POSITION = 4;
     public static final String NAME_TAB = "places";
     private View view;
+    private SupportMapFragment mMapFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +31,13 @@ public class PlaceFragment extends Fragment {
     }
 
     private void init() {
+        createMap();
+    }
 
+    private void createMap(){
+        mMapFragment = SupportMapFragment.newInstance();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.mapas, mMapFragment).commit();
     }
 
     @Override
@@ -48,18 +57,17 @@ public class PlaceFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        try {
-            Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.remove(fragment);
-            ft.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//
+//        try {
+//            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+//            ft.remove(mMapFragment);
+//            ft.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }

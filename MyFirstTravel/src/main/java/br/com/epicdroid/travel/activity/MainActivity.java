@@ -31,6 +31,7 @@ public class MainActivity extends FragmentActivity {
 
     }
 
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
