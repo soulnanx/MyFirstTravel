@@ -1,34 +1,32 @@
 package br.com.epicdroid.travel.dialogs;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
-import android.util.Log;
+import android.os.Build;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.SqlAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.components.DialogDatePicker;
-import br.com.epicdroid.travel.delegate.DelegateDateModal;
 import br.com.epicdroid.travel.entity.Travel;
 import br.com.epicdroid.travel.fragment.TravelFragment;
 
 public class DialogCreateTravel extends Dialog{
 
-    UIHelper uiHelper;
-    SqlAdapter adapter;
-    Context context;
-    TravelFragment fragment;
-    Travel travel;
+    private UIHelper uiHelper;
+    private SqlAdapter adapter;
+    private Context context;
+    private TravelFragment fragment;
+    private Travel travel;
 
     public DialogCreateTravel(Context context, TravelFragment fragment) {
         super(context);
@@ -61,6 +59,12 @@ public class DialogCreateTravel extends Dialog{
                     @Override
                     public void setDate(Calendar c) {
                         ((TextView)view).setText(new SimpleDateFormat("dd MMM yyyy").format(c.getTime()).toUpperCase());
+                        switch (view.getId()){
+                            case R.id.travel_create_dialog_edt_start_travel:
+                                travel.setStartTravel(c.getTimeInMillis());
+                            case R.id.travel_create_dialog_edt_finish_travel:
+                                travel.setFinishTravel(c.getTimeInMillis());
+                        }
                     }
                 }.show(fragment.getActivity().getFragmentManager(), "");
             }
@@ -87,14 +91,12 @@ public class DialogCreateTravel extends Dialog{
     }
 
     private void createDebit() {
-        Travel debit = new Travel();
-        debit.setTitle(uiHelper.title.getText().toString());
-        debit.setInitialMoney(uiHelper.initialMoney.getText().toString());
-        debit.setStartTravel(new Date());
-        debit.setFinishTravel(new Date());
+        travel.setTitle(uiHelper.title.getText().toString());
+        travel.setInitialMoney(uiHelper.initialMoney.getText().toString());
 
-        adapter.store(debit);
+        adapter.store(travel);
     }
+
 
     private class UIHelper{
         EditText title;
@@ -105,6 +107,7 @@ public class DialogCreateTravel extends Dialog{
         LinearLayout btnOK;
         LinearLayout btnCancel;
 
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         public UIHelper(DialogCreateTravel view) {
             this.title = (EditText)view.findViewById(R.id.travel_create_dialog_edt_title);
             this.initialMoney = (EditText)view.findViewById(R.id.travel_create_dialog_edt_money);

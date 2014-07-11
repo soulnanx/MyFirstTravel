@@ -6,8 +6,14 @@ public class Travel {
     private long id;
     private String title;
     private String initialMoney;
-    private Date startTravel;
-    private Date finishTravel;
+    private long startTravel;
+    private long finishTravel;
+
+    public Travel() {}
+
+    public Travel(long id) {
+        this.id = id;
+    }
 
     public long getId() {
         return id;
@@ -33,19 +39,19 @@ public class Travel {
         this.initialMoney = initialMoney;
     }
 
-    public Date getStartTravel() {
+    public long getStartTravel() {
         return startTravel;
     }
 
-    public void setStartTravel(Date startTravel) {
+    public void setStartTravel(long startTravel) {
         this.startTravel = startTravel;
     }
 
-    public Date getFinishTravel() {
+    public long getFinishTravel() {
         return finishTravel;
     }
 
-    public void setFinishTravel(Date finishTravel) {
+    public void setFinishTravel(long finishTravel) {
         this.finishTravel = finishTravel;
     }
 }

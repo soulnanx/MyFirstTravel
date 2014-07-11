@@ -33,6 +33,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/travel_show_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Canada"
@@ -72,6 +73,7 @@
 
 
             <TextView
+                android:id="@+id/travel_show_start_travel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="04-JUN-2014"
@@ -94,6 +96,7 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/travel_show_finish_travel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="24-JUN-2014"
@@ -122,6 +125,7 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/travel_show_days_remaining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20"
@@ -170,7 +174,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_debit_initial_value"
+                android:id="@+id/travel_show_initial_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
@@ -194,7 +198,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_debit_sum_value"
+                android:id="@+id/travel_show_total_debits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
@@ -217,7 +221,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_debit_current_value"
+                android:id="@+id/travel_show_current_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/holo_blue_dark"

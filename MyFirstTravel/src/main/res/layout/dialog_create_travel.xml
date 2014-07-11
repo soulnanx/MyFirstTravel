@@ -35,6 +35,7 @@
         android:layout_margin="7dp"
         android:ems="10"
         android:textSize="18sp"
+        style="@android:style/Widget.Holo.Light.Spinner"
         android:hint="start travel" />
 
     <TextView
@@ -46,6 +47,7 @@
         android:ems="10"
         android:textSize="18sp"
         android:inputType="date"
+        style="@android:style/Widget.Holo.Light.Spinner"
         android:hint="end travel" />
 
     <LinearLayout

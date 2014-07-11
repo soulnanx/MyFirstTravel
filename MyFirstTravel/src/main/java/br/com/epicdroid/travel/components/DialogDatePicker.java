@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
-import br.com.epicdroid.travel.delegate.DelegateDateModal;
 
 public abstract class DialogDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
