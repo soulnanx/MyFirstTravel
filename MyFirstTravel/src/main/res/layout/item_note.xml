@@ -21,6 +21,6 @@
             android:text="description"
             android:id="@+id/item_txt_descripion"
             android:ellipsize="end"
-        android:textSize="15sp"
+            android:textSize="15sp"
             android:lines="1"/>
 </LinearLayout>

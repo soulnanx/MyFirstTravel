@@ -9,39 +9,32 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.codeslap.persistence.Persistence;
-import com.codeslap.persistence.SqlAdapter;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
 
 import br.com.epicdroid.travel.R;
+import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.dialogs.DialogCreateTravel;
 import br.com.epicdroid.travel.entity.Debit;
 import br.com.epicdroid.travel.entity.Travel;
+import br.com.epicdroid.travel.utils.TextFormatUtils;
 
 public class TravelFragment extends Fragment {
 
     public static final int POSITION = 0;
     public static final String NAME_TAB = "travel";
     private View view;
-    private SqlAdapter adapter;
-    private List<Debit> debitList;
-    private Travel travel;
     private UIHelper uiHelper;
+    private app application;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        adapter = Persistence.getAdapter(TravelFragment.this.getActivity());
 
-        if (isNotTravelSet()){
+        application = (app) getActivity().getApplication();
+
+        if (application.isNotTravelSet()){
             view = inflater.inflate(R.layout.fragment_no_travel, container, false);
         } else {
             view = inflater.inflate(R.layout.fragment_travel, container, false);
@@ -49,15 +42,6 @@ public class TravelFragment extends Fragment {
         }
 
         return view;
-    }
-
-    private boolean isNotTravelSet() {
-        try {
-            if (adapter.findAll(Travel.class).isEmpty()){
-                return true;
-            }
-        } catch (Exception e){return true;}
-        return false;
     }
 
     private void init() {
@@ -68,39 +52,21 @@ public class TravelFragment extends Fragment {
     }
 
     private void setFields() {
-        uiHelper.title.setText(travel.getTitle());
-        uiHelper.startTravel.setText(formatDateToField(travel.getStartTravel()));
-        uiHelper.finishTravel.setText(formatDateToField(travel.getFinishTravel()));
-        uiHelper.daysRemaining.setText(calculateRemainingDays());
-        uiHelper.initialMoney.setText(travel.getInitialMoney());
-        uiHelper.totalDebits.setText(calculateTotalDebits());
-        uiHelper.currentMoney.setText(calculateCurrentMoney());
-    }
-
-    private String calculateCurrentMoney() {
-        return "";
-    }
-
-    private String calculateTotalDebits() {
-        return "";
-    }
-
-    private String calculateRemainingDays() {
-        return "";
-    }
-
-    private String formatDateToField(long timeMillis) {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(timeMillis);
-        return (new SimpleDateFormat("dd MMM yyyy").format(c.getTime()).toUpperCase());
+        uiHelper.title.setText(application.travel.getTitle());
+        uiHelper.startTravel.setText(TextFormatUtils.formatDateToField(application.travel.getStartTravel()));
+        uiHelper.finishTravel.setText(TextFormatUtils.formatDateToField(application.travel.getFinishTravel()));
+        uiHelper.daysRemaining.setText(TextFormatUtils.calculateRemainingDays(application.travel.getFinishTravel(), application.travel.getStartTravel()));
+        uiHelper.initialMoney.setText(TextFormatUtils.showAsMoney(new BigDecimal(application.travel.getInitialMoney())));
+        uiHelper.totalDebits.setText(TextFormatUtils.showAsMoney(application.calculateTotalDebits()));
+        uiHelper.currentMoney.setText(TextFormatUtils.showAsMoney(application.calculateCurrentMoney()));
     }
 
     private void findDebits(){
-        debitList = adapter.findAll(Debit.class);
+        application.debitList = application.adapter.findAll(Debit.class);
     }
 
     private void findTravel(){
-        travel = adapter.findFirst(new Travel(1));
+        application.travel = application.adapter.findFirst(new Travel(1));
     }
 
     @Override
@@ -118,6 +84,14 @@ public class TravelFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void refresh(){
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .detach(this)
+                .attach(this)
+                .commit();
     }
 
     private class UIHelper{

@@ -12,13 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codeslap.persistence.Persistence;
-import com.codeslap.persistence.SqlAdapter;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.DebitAdapter;
+import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.dialogs.DialogCreateDebit;
 import br.com.epicdroid.travel.dialogs.DialogShowDebit;
 import br.com.epicdroid.travel.entity.Debit;
@@ -30,28 +33,40 @@ public class FinanceFragment extends Fragment {
 
     private UIHelper uiHelper;
     private View view;
-    private SqlAdapter adapter;
-
     private Debit debitSelected;
+    private app application;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_finance, container, false);
-
 
         init();
         configureActionMode();
         return view;
     }
     private void init() {
+        application = (app) getActivity().getApplication();
         setHasOptionsMenu(true);
 
         uiHelper = new UIHelper(view);
-        adapter = Persistence.getAdapter(FinanceFragment.this.getActivity());
+        setFields();
+        setList();
+    }
+
+    private void setFields() {
         uiHelper.listViewDebits = (ListView) view.findViewById(R.id.debit_list);
         uiHelper.listViewDebits.setOnItemLongClickListener(eventOnLongClickDebit());
         uiHelper.listViewDebits.setOnItemClickListener(eventOnClickDebit());
-        setList();
+        uiHelper.initialMoney.setText(showAsMoney(new BigDecimal(application.travel.getInitialMoney())));
+        uiHelper.totalDebits.setText(showAsMoney(application.calculateTotalDebits()));
+        uiHelper.currentMoney.setText(showAsMoney(application.calculateCurrentMoney()));
+    }
+
+    private String showAsMoney(BigDecimal money){
+        NumberFormat usdCostFormat = NumberFormat.getCurrencyInstance(Locale.US);
+        usdCostFormat.setMinimumFractionDigits( 2 );
+        usdCostFormat.setMaximumFractionDigits( 2 );
+        return usdCostFormat.format(money.doubleValue());
     }
 
     private AdapterView.OnItemClickListener eventOnClickDebit() {
@@ -121,7 +136,7 @@ public class FinanceFragment extends Fragment {
     }
 
     private void deleteDebit() {
-        adapter.delete(debitSelected);
+        application.adapter.delete(debitSelected);
         Toast.makeText(getActivity().getBaseContext(), debitSelected.getTitle() + " was deleted!", Toast.LENGTH_LONG).show();
         setList();
     }
@@ -147,15 +162,22 @@ public class FinanceFragment extends Fragment {
     }
 
     public void setList(){
-        uiHelper.listViewDebits.setAdapter(new DebitAdapter(FinanceFragment.this.getActivity(), R.layout.item_debit, adapter.findAll(Debit.class)));
+        uiHelper.listViewDebits.setAdapter(new DebitAdapter(FinanceFragment.this.getActivity(), R.layout.item_debit, application.adapter.findAll(Debit.class)));
     }
+
     private class UIHelper{
         ListView listViewDebits;
         ActionMode.Callback mCallback;
         ActionMode mMode;
+        TextView initialMoney;
+        TextView totalDebits;
+        TextView currentMoney;
 
-        private UIHelper(View view) {
+        public UIHelper(View view) {
             this.listViewDebits = (ListView) view.findViewById(R.id.debit_list);
+            this.initialMoney = (TextView)view.findViewById(R.id.travel_show_initial_money);
+            this.totalDebits = (TextView)view.findViewById(R.id.travel_show_total_debits);
+            this.currentMoney = (TextView)view.findViewById(R.id.travel_show_current_money);
         }
     }
 

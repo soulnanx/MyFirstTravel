@@ -85,6 +85,7 @@ public class DialogCreateTravel extends Dialog{
             @Override
             public void onClick(View view) {
                 createDebit();
+                fragment.refresh();
                 DialogCreateTravel.this.dismiss();
             }
         };
