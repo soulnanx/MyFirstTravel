@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import br.com.epicdroid.travel.R;
+import br.com.epicdroid.travel.dialogs.DialogCreatePlace;
 
 public class PlaceFragment extends Fragment {
 
@@ -51,7 +52,7 @@ public class PlaceFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_new_note:
-//                new DialogCreateNote(PlaceFragment.this.getActivity(), this).show();
+                new DialogCreatePlace(PlaceFragment.this.getActivity(), this).show();
         }
 
         return super.onOptionsItemSelected(item);
