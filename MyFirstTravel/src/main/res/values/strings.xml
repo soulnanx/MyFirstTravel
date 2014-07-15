@@ -18,6 +18,13 @@
     <string name="dialog_edt_value">Value</string>
     <string name="dialog_edt_description">Description</string>
 
+    <string name="dialog_label_title">TITLE:</string>
+    <string name="dialog_label_description">DESCRIPTION:</string>
+    <string name="dialog_label_value">VALUE:</string>
+    <string name="dialog_label_address">ADDRESS:</string>
+
+    <string name="dialog_hint_address">Street four, 250, Toronto...</string>
+
     <!-- NOTE Dialog-->
     <string name="dialog_create_note_title">Create a new note</string>
     <string name="dialog_update_note_title">Update note</string>

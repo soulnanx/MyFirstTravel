@@ -4,8 +4,12 @@ import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +28,7 @@ import br.com.epicdroid.travel.entity.Travel;
 import br.com.epicdroid.travel.fragment.PlaceFragment;
 import br.com.epicdroid.travel.fragment.TravelFragment;
 
-public class DialogCreatePlace extends Dialog{
+public class DialogCreatePlace extends DialogFragment{
 
     private UIHelper uiHelper;
     private SqlAdapter adapter;
@@ -32,27 +36,29 @@ public class DialogCreatePlace extends Dialog{
     private PlaceFragment fragment;
     private Place place;
     private SupportMapFragment mMapFragment;
+    private View view;
 
-    public DialogCreatePlace(Context context, PlaceFragment fragment) {
-        super(context);
-        this.context = context;
-        this.fragment = fragment;
+    public DialogCreatePlace() {}
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.dialog_create_place, container);
         init();
-        initEvents();
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        mMapFragment.getMap().setMyLocationEnabled(true);
+        super.onStart();
     }
 
     private void init() {
-        this.setContentView(R.layout.dialog_create_place);
-        uiHelper = new UIHelper(this);
-        this.setTitle(context.getString(R.string.dialog_create_place_title));
+        uiHelper = new UIHelper();
         adapter = Persistence.getAdapter(context);
         place = new Place();
+        getDialog().setTitle("Create a new place");
         createMap();
-    }
-
-    private void initEvents() {
-//        uiHelper.btnOK.setOnClickListener(eventOK());
-//        uiHelper.btnCancel.setOnClickListener(eventCancel());
     }
 
     private View.OnClickListener eventCancel() {
@@ -82,7 +88,7 @@ public class DialogCreatePlace extends Dialog{
 
     private void createMap(){
         mMapFragment = SupportMapFragment.newInstance();
-        FragmentTransaction transaction = fragment.getChildFragmentManager().beginTransaction();
+        FragmentTransaction transaction = this.getChildFragmentManager().beginTransaction();
         transaction.add(R.id.map_places , mMapFragment).commit();
     }
 
@@ -96,14 +102,14 @@ public class DialogCreatePlace extends Dialog{
         LinearLayout btnOK;
         LinearLayout btnCancel;
 
-        public UIHelper(DialogCreatePlace view) {
+        public UIHelper() {
 //            this.title = (EditText)view.findViewById(R.id.travel_create_dialog_edt_title);
 //            this.initialMoney = (EditText)view.findViewById(R.id.travel_create_dialog_edt_money);
 //            this.finishTravel = (TextView)view.findViewById(R.id.travel_create_dialog_edt_finish_travel);
 //            this.startTravel = (TextView)view.findViewById(R.id.travel_create_dialog_edt_start_travel);
 //
-//            this.btnOK = (LinearLayout)view.findViewById(R.id.travel_create_dialog_btn_ok);
-//            this.btnCancel = (LinearLayout)view.findViewById(R.id.travel_create_dialog_btn_cancel);
+            this.btnOK = (LinearLayout) view.findViewById(R.id.travel_create_dialog_btn_ok);
+            this.btnCancel = (LinearLayout) view.findViewById(R.id.travel_create_dialog_btn_cancel);
         }
     }
 

@@ -3,6 +3,7 @@ package br.com.epicdroid.travel.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,23 +53,16 @@ public class PlaceFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_new_note:
-                new DialogCreatePlace(PlaceFragment.this.getActivity(), this).show();
+//                new DialogCreatePlace(PlaceFragment.this.getActivity(), this).show();
+
+                FragmentManager fm = getFragmentManager();
+                DialogCreatePlace testDialog = new DialogCreatePlace();
+                testDialog.setRetainInstance(true);
+                testDialog.show(fm, "fragment_name");
+
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//
-//        try {
-//            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-//            ft.remove(mMapFragment);
-//            ft.commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 }
