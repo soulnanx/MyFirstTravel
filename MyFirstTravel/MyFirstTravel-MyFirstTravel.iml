@@ -76,6 +76,7 @@
     <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="persistence-0.9.22" level="project" />
+    <orderEntry type="library" exported="" name="android-saripaar-1.0.2" level="project" />
   </component>
 </module>
 

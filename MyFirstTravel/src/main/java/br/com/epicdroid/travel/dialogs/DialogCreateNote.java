@@ -5,15 +5,19 @@ import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.SqlAdapter;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Required;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.entity.Note;
 import br.com.epicdroid.travel.fragment.NoteFragment;
 
-public class DialogCreateNote extends Dialog{
+public class DialogCreateNote extends Dialog {
 
     UIHelper uiHelper;
     SqlAdapter adapter;
@@ -26,6 +30,10 @@ public class DialogCreateNote extends Dialog{
         this.fragment = fragment;
         init();
         initEvents();
+        initValidation();
+    }
+
+    private void initValidation() {
     }
 
     private void initEvents() {
@@ -46,26 +54,30 @@ public class DialogCreateNote extends Dialog{
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Note note = new Note();
-                note.setDescription(uiHelper.description.getText().toString());
-                note.setTitle(uiHelper.title.getText().toString());
-
-                adapter.store(note);
-                fragment.setList();
-                DialogCreateNote.this.dismiss();
+                uiHelper.validator.validate();
             }
         };
     }
 
+    private void saveNote(){
+        adapter.store(new Note(uiHelper.title.getText().toString(), uiHelper.description.getText().toString()));
+        fragment.setList();
+        DialogCreateNote.this.dismiss();
+    }
+
     private void init() {
         this.setContentView(R.layout.dialog_create_note);
-        uiHelper = new UIHelper(this);
         this.setTitle(context.getString(R.string.dialog_create_note_title));
+        uiHelper = new UIHelper(this);
         adapter = Persistence.getAdapter(context);
     }
 
-    private class UIHelper{
+    private class UIHelper implements Validator.ValidationListener {
+        final Validator validator;
+        @Required(order = 1, message = "it's incorrect =P")
         EditText title;
+
+
         EditText description;
         LinearLayout btnOK;
         LinearLayout btnCancel;
@@ -75,6 +87,24 @@ public class DialogCreateNote extends Dialog{
             this.description = (EditText)view.findViewById(R.id.note_create_dialog_edt_description);
             this.btnOK = (LinearLayout)view.findViewById(R.id.note_create_dialog_btn_ok);
             this.btnCancel = (LinearLayout)view.findViewById(R.id.note_create_dialog_btn_cancel);
+
+            validator = new Validator(this);
+            validator.setValidationListener(this);
+        }
+
+        public void onValidationSucceeded() {
+            saveNote();
+        }
+
+        public void onValidationFailed(View failedView, Rule<?> failedRule) {
+            String message = failedRule.getFailureMessage();
+
+            if (failedView instanceof EditText) {
+                failedView.requestFocus();
+                ((EditText) failedView).setError(message);
+            } else {
+                Toast.makeText(DialogCreateNote.this.getContext(), message, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -6,6 +6,14 @@ public class Note {
     private String description;
     private int priority;
 
+    public Note(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    public Note() {
+    }
+
     public long getId() {
         return id;
     }
