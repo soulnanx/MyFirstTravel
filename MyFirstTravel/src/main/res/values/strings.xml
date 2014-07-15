@@ -14,14 +14,14 @@
     <!-- COMMONS Dialog-->
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_edt_title">Title</string>
-    <string name="dialog_edt_value">Value</string>
-    <string name="dialog_edt_description">Description</string>
 
     <string name="dialog_label_title">TITLE:</string>
     <string name="dialog_label_description">DESCRIPTION:</string>
     <string name="dialog_label_value">VALUE:</string>
     <string name="dialog_label_address">ADDRESS:</string>
+    <string name="dialog_label_money" >MONEY:</string>
+    <string name="dialog_label_start_travel" >CHECK IN:</string>
+    <string name="dialog_label_finish_travel" >CHECK OUT:</string>
 
     <string name="dialog_hint_address">Street four, 250, Toronto...</string>
 
@@ -36,6 +36,7 @@
     <!-- PLACE Dialog-->
     <string name="dialog_create_place_title">Create a new place</string>
     <string name="dialog_update_place_title">Update place</string>
+
 
 
 </resources>

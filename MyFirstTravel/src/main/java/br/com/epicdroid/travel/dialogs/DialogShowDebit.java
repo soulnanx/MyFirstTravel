@@ -44,15 +44,21 @@ public class DialogShowDebit extends Dialog{
     }
 
     private void setValues(){
-        uiHelper.description.setText(debit.getDescription());
+        if (null != debit.getDescription()){
+            uiHelper.description.setText(debit.getDescription());
+            uiHelper.value.setText(debit.getValue());
+        }
     }
 
     private class UIHelper{
         TextView description;
+        TextView value;
         LinearLayout btnOK;
 
         public UIHelper(DialogShowDebit view) {
-            this.description = (TextView)view.findViewById(R.id.note_show_dialog_txt_description);
+            this.description = (TextView)view.findViewById(R.id.debit_show_dialog_txt_description);
+            this.value = (TextView)view.findViewById(R.id.debit_show_dialog_txt_value);
+
             this.btnOK = (LinearLayout)view.findViewById(R.id.note_show_dialog_btn_ok);
         }
     }

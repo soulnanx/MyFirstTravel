@@ -74,11 +74,13 @@ public class DialogCreateNote extends Dialog {
 
     private class UIHelper implements Validator.ValidationListener {
         final Validator validator;
-        @Required(order = 1, message = "it's incorrect =P")
+
+        @Required(order = 1, message = "it's mandatory =(")
         EditText title;
 
-
+        @Required(order = 2, message = "it's mandatory =(")
         EditText description;
+
         LinearLayout btnOK;
         LinearLayout btnCancel;
 
