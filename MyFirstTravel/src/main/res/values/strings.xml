@@ -6,37 +6,35 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-
     <string name="item_menu_new_note">+ note</string>
     <string name="item_menu_new_task">+ task</string>
     <string name="item_menu_new_debit">+ debit</string>
 
-    <!-- COMMONS Dialog-->
+    <!-- COMMONS Dialog -->
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
-
     <string name="dialog_label_title">TITLE:</string>
     <string name="dialog_label_description">DESCRIPTION:</string>
     <string name="dialog_label_value">VALUE:</string>
     <string name="dialog_label_address">ADDRESS:</string>
-    <string name="dialog_label_money" >MONEY:</string>
-    <string name="dialog_label_start_travel" >CHECK IN:</string>
-    <string name="dialog_label_finish_travel" >CHECK OUT:</string>
-
+    <string name="dialog_label_money">MONEY:</string>
+    <string name="dialog_label_start_travel">CHECK IN:</string>
+    <string name="dialog_label_finish_travel">CHECK OUT:</string>
     <string name="dialog_hint_address">Street four, 250, Toronto...</string>
 
-    <!-- NOTE Dialog-->
+    <!-- NOTE Dialog -->
     <string name="dialog_create_note_title">Create a new note</string>
     <string name="dialog_update_note_title">Update note</string>
 
-    <!-- DEBIT Dialog-->
+    <!-- DEBIT Dialog -->
     <string name="dialog_create_debit_title">Create a new note</string>
     <string name="dialog_update_debit_title">Update note</string>
 
-    <!-- PLACE Dialog-->
+    <!-- PLACE Dialog -->
     <string name="dialog_create_place_title">Create a new place</string>
     <string name="dialog_update_place_title">Update place</string>
-
-
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_travel">CreateTravelActivity</string>
 
 </resources>

@@ -5,9 +5,13 @@ import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.SqlAdapter;
+import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Required;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.entity.Debit;
@@ -46,14 +50,19 @@ public class DialogCreateDebit extends Dialog{
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createDebit();
-                fragment.setList();
-                DialogCreateDebit.this.dismiss();
+                uiHelper.validator.validate();
+
             }
         };
     }
 
     private void createDebit() {
+        saveDebit();
+        fragment.setList();
+        DialogCreateDebit.this.dismiss();
+    }
+
+    private void saveDebit(){
         Debit debit = new Debit();
         debit.setDescription(uiHelper.description.getText().toString());
         debit.setTitle(uiHelper.title.getText().toString());
@@ -69,10 +78,16 @@ public class DialogCreateDebit extends Dialog{
         adapter = Persistence.getAdapter(context);
     }
 
-    private class UIHelper{
+    private class UIHelper implements Validator.ValidationListener{
+        Validator validator;
+
+        @Required(order = 1, message = "it's mandatory =(")
         EditText title;
-        EditText description;
+
+        @Required(order = 2, message = "it's mandatory =(")
         EditText value;
+
+        EditText description;
         LinearLayout btnOK;
         LinearLayout btnCancel;
 
@@ -83,6 +98,24 @@ public class DialogCreateDebit extends Dialog{
 
             this.btnOK = (LinearLayout)view.findViewById(R.id.debit_create_dialog_btn_ok);
             this.btnCancel = (LinearLayout)view.findViewById(R.id.debit_create_dialog_btn_cancel);
+
+            validator = new Validator(this);
+            validator.setValidationListener(this);
+        }
+
+        public void onValidationSucceeded() {
+            createDebit();
+        }
+
+        public void onValidationFailed(View failedView, Rule<?> failedRule) {
+            String message = failedRule.getFailureMessage();
+
+            if (failedView instanceof EditText) {
+                failedView.requestFocus();
+                ((EditText) failedView).setError(message);
+            } else {
+                Toast.makeText(DialogCreateDebit.this.getContext(), message, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
