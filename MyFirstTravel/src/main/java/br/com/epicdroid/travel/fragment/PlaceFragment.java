@@ -1,10 +1,12 @@
 package br.com.epicdroid.travel.fragment;
 
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +17,11 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import br.com.epicdroid.travel.R;
+import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.dialogs.DialogCreatePlace;
+import br.com.epicdroid.travel.utils.AlertDialogManagerUtils;
+import br.com.epicdroid.travel.utils.ConnectionDetectorUtils;
+import br.com.epicdroid.travel.utils.GPSTracker;
 
 public class PlaceFragment extends Fragment {
 
@@ -23,18 +29,23 @@ public class PlaceFragment extends Fragment {
     public static final String NAME_TAB = "places";
     private View view;
     private SupportMapFragment mMapFragment;
+    private app application;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_places, container, false);
         setHasOptionsMenu(true);
         init();
+
         return view;
     }
 
     private void init() {
+        application = (app) this.getActivity().getApplication();
         createMap();
     }
+
+
 
     private void createMap(){
         mMapFragment = SupportMapFragment.newInstance();
@@ -53,16 +64,21 @@ public class PlaceFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_new_note:
-//                new DialogCreatePlace(PlaceFragment.this.getActivity(), this).show();
 
-                FragmentManager fm = getFragmentManager();
-                DialogCreatePlace testDialog = new DialogCreatePlace();
-                testDialog.setRetainInstance(true);
-                testDialog.show(fm, "fragment_name");
-
+                if (application.isInternetConnection(this.getActivity())
+                        && application.isGPSEnable(this.getActivity())){
+                    showDialog();
+                }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialog(){
+        FragmentManager fm = getFragmentManager();
+        DialogCreatePlace testDialog = new DialogCreatePlace();
+        testDialog.setRetainInstance(true);
+        testDialog.show(fm, "fragment_name");
     }
 
 }

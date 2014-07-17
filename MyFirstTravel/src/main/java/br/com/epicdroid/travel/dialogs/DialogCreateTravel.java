@@ -98,7 +98,6 @@ public class DialogCreateTravel extends Dialog{
         adapter.store(travel);
     }
 
-
     private class UIHelper{
         EditText title;
         TextView startTravel;
@@ -119,7 +118,5 @@ public class DialogCreateTravel extends Dialog{
             this.btnCancel = (LinearLayout)view.findViewById(R.id.travel_create_dialog_btn_cancel);
         }
     }
-
-
 
 }

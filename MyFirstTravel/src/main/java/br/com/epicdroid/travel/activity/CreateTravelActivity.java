@@ -1,6 +1,7 @@
 package br.com.epicdroid.travel.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -13,11 +14,11 @@ public class CreateTravelActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_travel);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new CreateTravelFragment())
-                    .commit();
-        }
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new CreateTravelFragment())
+                .commit();
     }
+
 
 }

@@ -13,13 +13,13 @@
         android:text="@string/dialog_label_address"
         android:textSize="12sp"/>
 
-    <EditText
+    <AutoCompleteTextView
+        android:id="@+id/place_create_dialog_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/dialog_hint_address"
-        android:lines="1"
-        android:ellipsize="end"
-        android:id="@+id/place_create_dialog_address" />
+        android:layout_marginTop="65dp"
+        android:ems="10" />
 
     <LinearLayout
         android:id="@+id/map_places"

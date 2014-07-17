@@ -33,8 +33,7 @@
     <!-- PLACE Dialog -->
     <string name="dialog_create_place_title">Create a new place</string>
     <string name="dialog_update_place_title">Update place</string>
-    <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_create_travel">CreateTravelActivity</string>
+    <string name="title_activity_create_travel">Input about your travel</string>
 
 </resources>

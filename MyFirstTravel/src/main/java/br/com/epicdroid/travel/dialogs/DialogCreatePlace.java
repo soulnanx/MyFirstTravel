@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -94,14 +95,14 @@ public class DialogCreatePlace extends DialogFragment {
 
         @Required(order = 1, message = "it's mandatory =(")
         EditText title;
-        EditText address;
+        AutoCompleteTextView address;
 
         LinearLayout btnOK;
         LinearLayout btnCancel;
 
         public UIHelper() {
             this.title = (EditText) view.findViewById(R.id.place_create_dialog_title);
-            this.address = (EditText) view.findViewById(R.id.place_create_dialog_address);
+            this.address = (AutoCompleteTextView) view.findViewById(R.id.place_create_dialog_address);
             this.btnOK = (LinearLayout) view.findViewById(R.id.travel_create_dialog_btn_ok);
             this.btnCancel = (LinearLayout) view.findViewById(R.id.travel_create_dialog_btn_cancel);
 

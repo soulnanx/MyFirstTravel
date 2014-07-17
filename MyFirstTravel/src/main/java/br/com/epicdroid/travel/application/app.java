@@ -1,6 +1,8 @@
 package br.com.epicdroid.travel.application;
 
+import android.app.Activity;
 import android.app.Application;
+import android.util.Log;
 
 import com.codeslap.persistence.DatabaseSpec;
 import com.codeslap.persistence.Persistence;
@@ -15,6 +17,9 @@ import br.com.epicdroid.travel.entity.Debit;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.entity.Task;
 import br.com.epicdroid.travel.entity.Travel;
+import br.com.epicdroid.travel.utils.AlertDialogManagerUtils;
+import br.com.epicdroid.travel.utils.ConnectionDetectorUtils;
+import br.com.epicdroid.travel.utils.GPSTracker;
 
 public class app extends Application {
 
@@ -62,5 +67,30 @@ public class app extends Application {
             }
         } catch (Exception e){return true;}
         return false;
+    }
+
+    public boolean isInternetConnection(Activity activity){
+        ConnectionDetectorUtils cd = new ConnectionDetectorUtils(this);
+        if (!cd.isConnectingToInternet()) {
+            new AlertDialogManagerUtils().showAlertDialog(activity, "Internet Connection Error",
+                    "Please connect to working Internet connection", false);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isGPSEnable(Activity activity){
+        GPSTracker gps = new GPSTracker(activity);
+
+        if (gps.canGetLocation()) {
+            Log.d("Your Location", "latitude:" + gps.getLatitude() + ", longitude: " + gps.getLongitude());
+        } else {
+            new AlertDialogManagerUtils().showAlertDialog(activity, "GPS Status",
+                    "Couldn't get location information. Please enable GPS",
+                    false);
+            return false;
+        }
+
+        return true;
     }
 }
