@@ -2,77 +2,62 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="7dp"
-    android:padding="7dp"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dialog_label_address"
-        android:textSize="12sp" />
+    android:orientation="vertical"
+    android:padding="7dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="6">
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_label_address"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/place_create_dialog_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:ellipsize="end"
+            android:lines="2" />
+
+    </LinearLayout>
+
+
+    <!--TITLE-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="@string/dialog_label_title"
+            android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/place_create_dialog_address"
-            android:layout_width="0dp"
+            android:id="@+id/place_create_dialog_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
+            android:layout_marginTop="7dp"
             android:ellipsize="end"
-            android:hint="@string/dialog_hint_address"
             android:lines="1" />
-
-        <LinearLayout
-            android:id="@+id/travel_create_dialog_btn_search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_search"/>
-
-        </LinearLayout>
-
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/map_places"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="horizontal"></LinearLayout>
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_label_title"
-        android:layout_marginTop="7dp"
-        android:textSize="12sp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lines="1"
-        android:ellipsize="end"
-        android:id="@+id/place_create_dialog_title" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layout_margin="7dp"
         android:baselineAligned="false"
+        android:gravity="bottom"
         android:orientation="horizontal"
         android:weightSum="5">
 

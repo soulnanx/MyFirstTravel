@@ -1,6 +1,8 @@
 package br.com.epicdroid.travel.entity;
 
-public class Place {
+import java.io.Serializable;
+
+public class Place implements Serializable{
     private long id;
     private String title;
     private String address;

@@ -20,7 +20,7 @@
     <string name="dialog_label_money">MONEY:</string>
     <string name="dialog_label_start_travel">CHECK IN:</string>
     <string name="dialog_label_finish_travel">CHECK OUT:</string>
-    <string name="dialog_hint_address">Street four, 250, Toronto...</string>
+    <string name="dialog_hint_address">Address to find...</string>
 
     <!-- NOTE Dialog -->
     <string name="dialog_create_note_title">Create a new note</string>

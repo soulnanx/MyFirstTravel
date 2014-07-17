@@ -17,6 +17,7 @@ import br.com.epicdroid.travel.entity.Debit;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.entity.Task;
 import br.com.epicdroid.travel.entity.Travel;
+import br.com.epicdroid.travel.fragment.PlaceFragment;
 import br.com.epicdroid.travel.utils.AlertDialogManagerUtils;
 import br.com.epicdroid.travel.utils.ConnectionDetectorUtils;
 import br.com.epicdroid.travel.utils.GPSTrackerUtils;
@@ -26,7 +27,8 @@ public class app extends Application {
     public SqlAdapter adapter;
     public List<Debit> debitList;
     public Travel travel;
-    public  GPSTrackerUtils gps;
+    public GPSTrackerUtils gps;
+    public PlaceFragment placeFragment;
 
     @Override
     public void onCreate() {
