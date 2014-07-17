@@ -26,6 +26,7 @@ public class app extends Application {
     public SqlAdapter adapter;
     public List<Debit> debitList;
     public Travel travel;
+    public GPSTrackerUtils gps;
 
     @Override
     public void onCreate() {
@@ -80,7 +81,7 @@ public class app extends Application {
     }
 
     public boolean isGPSEnable(Activity activity){
-        GPSTrackerUtils gps = new GPSTrackerUtils(activity);
+        gps = new GPSTrackerUtils(activity);
 
         if (gps.canGetLocation()) {
             Log.d("Your Location", "latitude:" + gps.getLatitude() + ", longitude: " + gps.getLongitude());
