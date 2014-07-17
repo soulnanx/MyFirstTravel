@@ -4,8 +4,8 @@ public class Place {
     private long id;
     private String title;
     private String address;
-    private long latitude;
-    private long longitde;
+    private double latitude;
+    private double longitde;
 
     public long getId() {
         return id;
@@ -31,19 +31,19 @@ public class Place {
         this.address = address;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public long getLongitde() {
+    public double getLongitde() {
         return longitde;
     }
 
-    public void setLongitde(long longitde) {
+    public void setLongitde(double longitde) {
         this.longitde = longitde;
     }
 }

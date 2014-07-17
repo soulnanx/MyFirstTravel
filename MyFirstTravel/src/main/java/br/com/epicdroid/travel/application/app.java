@@ -26,7 +26,7 @@ public class app extends Application {
     public SqlAdapter adapter;
     public List<Debit> debitList;
     public Travel travel;
-    public GPSTrackerUtils gps;
+    public  GPSTrackerUtils gps;
 
     @Override
     public void onCreate() {
