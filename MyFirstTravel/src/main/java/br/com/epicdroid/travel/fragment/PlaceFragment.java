@@ -1,12 +1,10 @@
 package br.com.epicdroid.travel.fragment;
 
 
-import android.app.Application;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,9 +17,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.dialogs.DialogCreatePlace;
-import br.com.epicdroid.travel.utils.AlertDialogManagerUtils;
-import br.com.epicdroid.travel.utils.ConnectionDetectorUtils;
-import br.com.epicdroid.travel.utils.GPSTracker;
 
 public class PlaceFragment extends Fragment {
 

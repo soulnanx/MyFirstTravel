@@ -19,7 +19,7 @@ import br.com.epicdroid.travel.entity.Task;
 import br.com.epicdroid.travel.entity.Travel;
 import br.com.epicdroid.travel.utils.AlertDialogManagerUtils;
 import br.com.epicdroid.travel.utils.ConnectionDetectorUtils;
-import br.com.epicdroid.travel.utils.GPSTracker;
+import br.com.epicdroid.travel.utils.GPSTrackerUtils;
 
 public class app extends Application {
 
@@ -80,7 +80,7 @@ public class app extends Application {
     }
 
     public boolean isGPSEnable(Activity activity){
-        GPSTracker gps = new GPSTracker(activity);
+        GPSTrackerUtils gps = new GPSTrackerUtils(activity);
 
         if (gps.canGetLocation()) {
             Log.d("Your Location", "latitude:" + gps.getLatitude() + ", longitude: " + gps.getLongitude());
