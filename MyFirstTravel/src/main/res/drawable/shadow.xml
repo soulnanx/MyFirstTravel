@@ -1,0 +1,14 @@
+<shape android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="@android:color/darker_gray"
+        android:endColor="@color/common_action_bar_splitter"
+        android:angle="90">
+    </gradient>
+
+    <corners android:radius="20dip" />
+
+    <stroke
+        android:width="1px"
+        android:color="@color/common_signin_btn_dark_text_disabled" />
+</shape>

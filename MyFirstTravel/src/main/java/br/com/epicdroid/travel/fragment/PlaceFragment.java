@@ -1,23 +1,21 @@
 package br.com.epicdroid.travel.fragment;
 
 
-import android.app.ProgressDialog;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,15 +25,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.application.app;
+import br.com.epicdroid.travel.asyncTask.AddressToLatLongAsyncTask;
+import br.com.epicdroid.travel.asyncTask.LatLongToAddressAsyncTask;
+import br.com.epicdroid.travel.delegate.DelegateReturnAddress;
+import br.com.epicdroid.travel.delegate.DelegateReturnLatLong;
 import br.com.epicdroid.travel.dialogs.DialogCreatePlace;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.utils.AddressDTO;
+import br.com.epicdroid.travel.utils.KeyboardUtils;
 
 public class PlaceFragment extends Fragment {
 
@@ -47,8 +48,9 @@ public class PlaceFragment extends Fragment {
     private GoogleMap map;
     private PlaceFragment fragment;
     private static final String BUNDLE_PLACE = "place";
-    private static final float ZOOM_DEFAULT = 15.0f;
-    private static final float ZOOM_CLOSE = 18.0f;
+    public static final float ZOOM_DEFAULT = 15.0f;
+    public static final float ZOOM_CLOSE = 18.0f;
+    public static final float ZOOM_TO_OPEN_PLACE = 20.0f;
     private Marker marker;
     private List<Place> placeList;
     private UIHelper uiHelper;
@@ -63,22 +65,53 @@ public class PlaceFragment extends Fragment {
     }
 
     private void initEvents() {
-        uiHelper.btnOK.setOnClickListener(eventOnClickSearch());
-    }
-
-    private View.OnClickListener eventOnClickSearch() {
-        return new View.OnClickListener() {
+        uiHelper.address.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View v) {
-
-                if (application.isInternetConnection(fragment.getActivity())
-                        && application.isGPSEnable(fragment.getActivity())) {
-                    new FindPlaceAsyncTask().execute();
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (application.isInternetConnection(fragment.getActivity())
+                            && application.isGPSEnable(fragment.getActivity())) {
+                        findByAddress(uiHelper.address.getText().toString());
+                        KeyboardUtils.closeSoftKeyBoard(PlaceFragment.this.getActivity(), uiHelper.address);
+                    }
+                    return true;
                 }
+                return false;
             }
-        };
+        });
     }
 
+    private void findByAddress(String sAddress){
+        new AddressToLatLongAsyncTask(
+                fragment.getActivity(),
+                sAddress,
+                new DelegateReturnLatLong() {
+                    @Override
+                    public void onReturn(LatLng latLng) {
+                        moveCameraMap(latLng, ZOOM_CLOSE);
+                    }
+                }).execute();
+    }
+
+    private void findByLatLong(LatLng latLng, final Place newPlace){
+        new LatLongToAddressAsyncTask(
+                fragment.getActivity(),
+                latLng,
+                new DelegateReturnAddress() {
+                    @Override
+                    public void onReturn(AddressDTO address) {
+                        newPlace.setAddress(address.toString());
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                showDialog(newPlace);
+                            }
+                        }, 500);
+
+
+                    }
+                }).execute();
+    }
 
     private void init() {
         uiHelper = new UIHelper();
@@ -96,7 +129,12 @@ public class PlaceFragment extends Fragment {
                         false,
                         placeItem.getTitle()));
             }
-            moveCameraMap(new LatLng(placeList.get(0).getLatitude(), placeList.get(0).getLongitde()), ZOOM_DEFAULT);
+        }
+    }
+
+    public void removePinNewPlace(){
+        if (marker != null){
+            marker.remove();
         }
     }
 
@@ -106,6 +144,12 @@ public class PlaceFragment extends Fragment {
         map.setMyLocationEnabled(true);
         map.setOnMapLongClickListener(eventOnMapClick());
         map.setOnInfoWindowClickListener(eventOnInfoViewClick());
+
+        if (application.isInternetConnection(this.getActivity())
+                && application.isGPSEnable(this.getActivity())) {
+            moveCameraMap(new LatLng(application.gps.getLatitude(), application.gps.getLongitude()), ZOOM_DEFAULT);
+        }
+
         putPinsMap();
         super.onStart();
     }
@@ -116,12 +160,12 @@ public class PlaceFragment extends Fragment {
             public void onInfoWindowClick(Marker marker) {
                 if (application.isInternetConnection(fragment.getActivity())
                         && application.isGPSEnable(fragment.getActivity())) {
-                    Place newPlace = new Place();
-                    newPlace.setLatitude(marker.getPosition().latitude);
-                    newPlace.setLongitde(marker.getPosition().longitude);
-                    newPlace.setAddress(findAddressByMarker(marker));
-                    marker.remove();
-                    showDialog(newPlace);
+//                    Place newPlace = new Place();
+//                    newPlace.setLatitude(marker.getPosition().latitude);
+//                    newPlace.setLongitde(marker.getPosition().longitude);
+//                    newPlace.setAddress(findAddressByMarker(marker));
+//                    marker.remove();
+//                    showDialog(newPlace);
                 }
             }
         };
@@ -137,56 +181,47 @@ public class PlaceFragment extends Fragment {
                         marker.remove();
                     }
 
-                    marker = map.addMarker(createPinMap(latLng, true, "Create a new place?"));
-                    marker.showInfoWindow();
-                    moveCameraMap(latLng, ZOOM_CLOSE);
+                    marker = map.addMarker(createPinMap(latLng, false));
+                    moveCameraMap(moveUpPin(latLng), ZOOM_TO_OPEN_PLACE);
+
+                    final Place newPlace = newPlace(marker);
+                    findByLatLong(latLng, newPlace);
+
+
+
                 }
             }
         };
     }
 
-    private void moveCameraMap(LatLng latLng, float zoom) {
+    private Place newPlace(Marker marker){
+        Place newPlace = new Place();
+        newPlace.setLatitude(this.marker.getPosition().latitude);
+        newPlace.setLongitde(this.marker.getPosition().longitude);
+        return newPlace;
+    }
+
+    private LatLng moveUpPin(LatLng latLng){
+        return new LatLng(latLng.latitude + 0.000200d, latLng.longitude);
+    }
+
+    public void moveCameraMap(LatLng latLng, float zoom) {
         CameraUpdate center = CameraUpdateFactory.newLatLngZoom(latLng, zoom);
         map.animateCamera(center);
     }
 
-    private String findAddressByMarker(Marker marker) {
-        String address = "";
-        Geocoder geocoder = new Geocoder(fragment.getActivity());
-        try {
-            AddressDTO dto = AddressDTO.fromAddressToAddressDTO(
-                    geocoder.getFromLocation(
-                            marker.getPosition().latitude,
-                            marker.getPosition().longitude, 1).get(0)
-            );
-            if (dto != null) {
-                address = dto.toString();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return address;
-    }
-
-    private LatLng findByAddress(String name) {
-        Geocoder geocoder = new Geocoder(fragment.getActivity());
-        try {
-            Address address = geocoder.getFromLocationName(name, 1).get(0);
-            if (address != null) {
-                return new LatLng(address.getLatitude(), address.getLongitude());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
     private MarkerOptions createPinMap(LatLng latLng, boolean isDraggable, String title) {
         return new MarkerOptions()
                 .position(latLng)
                 .draggable(isDraggable)
                 .title(title);
+    }
+
+    private MarkerOptions createPinMap(LatLng latLng, boolean isDraggable) {
+        return new MarkerOptions()
+                .position(latLng)
+                .draggable(isDraggable);
     }
 
 
@@ -230,43 +265,12 @@ public class PlaceFragment extends Fragment {
 
     private class UIHelper {
         EditText address;
-        LinearLayout btnOK;
+//        LinearLayout btnOK;
 
         public UIHelper() {
             this.address = (EditText) view.findViewById(R.id.place_edt_search);
-            this.btnOK = (LinearLayout) view.findViewById(R.id.place_btn_search);
+//            this.btnOK = (LinearLayout) view.findViewById(R.id.place_btn_search);
         }
 
     }
-
-    public class FindPlaceAsyncTask extends AsyncTask<Void, Void, LatLng> {
-
-        private ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = new ProgressDialog(fragment.getActivity()); // your activity
-            progressDialog.setMessage("looking for address...");
-            progressDialog.setCancelable(true);
-            progressDialog.show();
-
-        }
-
-        @Override
-        protected LatLng doInBackground(Void... params) {
-            return findByAddress(uiHelper.address.getText().toString());
-        }
-
-        @Override
-        protected void onPostExecute(LatLng latLng) {
-            if (latLng != null){
-                moveCameraMap(latLng, ZOOM_CLOSE);
-            }
-            progressDialog.dismiss();
-            super.onPostExecute(latLng);
-        }
-
-    }
-
-
 }

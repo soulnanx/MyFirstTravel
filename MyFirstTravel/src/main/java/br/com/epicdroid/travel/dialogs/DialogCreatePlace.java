@@ -72,6 +72,7 @@ public class DialogCreatePlace extends DialogFragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((app)getActivity().getApplication()).placeFragment.removePinNewPlace();
                 DialogCreatePlace.this.dismiss();
             }
         };
@@ -89,6 +90,9 @@ public class DialogCreatePlace extends DialogFragment {
     private void createPlace() {
         savePlace();
         ((app)getActivity().getApplication()).placeFragment.putPinsMap();
+        LatLng latLng = new LatLng(place.getLatitude(), place.getLongitde());
+        ((app)getActivity().getApplication()).placeFragment.moveCameraMap(latLng, PlaceFragment.ZOOM_CLOSE);
+        ((app)getActivity().getApplication()).placeFragment.removePinNewPlace();
         DialogCreatePlace.this.dismiss();
     }
 

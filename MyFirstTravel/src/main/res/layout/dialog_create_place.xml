@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:ellipsize="end"
+            android:textColor="@color/text_gray"
             android:lines="2" />
 
     </LinearLayout>
@@ -48,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:ellipsize="end"
+            android:textColor="@color/text_gray"
             android:lines="1" />
 
     </LinearLayout>
