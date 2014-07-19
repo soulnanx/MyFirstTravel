@@ -81,7 +81,7 @@ public class PlaceFragment extends Fragment {
         });
     }
 
-    private void findByAddress(String sAddress){
+    private void findByAddress(String sAddress) {
         new AddressToLatLongAsyncTask(
                 fragment.getActivity(),
                 sAddress,
@@ -90,10 +90,11 @@ public class PlaceFragment extends Fragment {
                     public void onReturn(LatLng latLng) {
                         moveCameraMap(latLng, ZOOM_CLOSE);
                     }
-                }).execute();
+                }
+        ).execute();
     }
 
-    private void findByLatLong(LatLng latLng, final Place newPlace){
+    private void findByLatLong(LatLng latLng, final Place newPlace) {
         new LatLongToAddressAsyncTask(
                 fragment.getActivity(),
                 latLng,
@@ -101,16 +102,19 @@ public class PlaceFragment extends Fragment {
                     @Override
                     public void onReturn(AddressDTO address) {
                         newPlace.setAddress(address.toString());
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                showDialog(newPlace);
-                            }
-                        }, 500);
-
-
+                        waitAndShowDialog(newPlace);
                     }
-                }).execute();
+                }
+        ).execute();
+    }
+
+    private void waitAndShowDialog(final Place place) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showDialog(place);
+            }
+        }, 500);
     }
 
     private void init() {
@@ -132,8 +136,8 @@ public class PlaceFragment extends Fragment {
         }
     }
 
-    public void removePinNewPlace(){
-        if (marker != null){
+    public void removePinNewPlace() {
+        if (marker != null) {
             marker.remove();
         }
     }
@@ -183,25 +187,21 @@ public class PlaceFragment extends Fragment {
 
                     marker = map.addMarker(createPinMap(latLng, false));
                     moveCameraMap(moveUpPin(latLng), ZOOM_TO_OPEN_PLACE);
-
-                    final Place newPlace = newPlace(marker);
-                    findByLatLong(latLng, newPlace);
-
-
+                    findByLatLong(latLng, newPlace(marker));
 
                 }
             }
         };
     }
 
-    private Place newPlace(Marker marker){
+    private Place newPlace(Marker marker) {
         Place newPlace = new Place();
         newPlace.setLatitude(this.marker.getPosition().latitude);
         newPlace.setLongitde(this.marker.getPosition().longitude);
         return newPlace;
     }
 
-    private LatLng moveUpPin(LatLng latLng){
+    private LatLng moveUpPin(LatLng latLng) {
         return new LatLng(latLng.latitude + 0.000200d, latLng.longitude);
     }
 
