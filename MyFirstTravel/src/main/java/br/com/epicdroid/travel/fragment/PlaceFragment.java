@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,8 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,40 +33,89 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
+import br.com.epicdroid.travel.adapter.NoteAdapter;
+import br.com.epicdroid.travel.adapter.PlaceAdapter;
 import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.asyncTask.AddressToLatLongAsyncTask;
 import br.com.epicdroid.travel.asyncTask.LatLongToAddressAsyncTask;
 import br.com.epicdroid.travel.delegate.DelegateReturnAddress;
 import br.com.epicdroid.travel.delegate.DelegateReturnLatLong;
 import br.com.epicdroid.travel.dialogs.DialogCreatePlace;
+import br.com.epicdroid.travel.dialogs.DialogShowPlace;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.utils.AddressDTO;
 import br.com.epicdroid.travel.utils.KeyboardUtils;
 
 public class PlaceFragment extends Fragment {
 
-    public static final int POSITION = 4;
+    public static final int POSITION = 3;
     public static final String NAME_TAB = "places";
     private View view;
     private SupportMapFragment mMapFragment;
     private app application;
     private GoogleMap map;
     private PlaceFragment fragment;
-    private static final String BUNDLE_PLACE = "place";
+    private static final String BUNDLE_NEW_PLACE = "place";
+    private static final String VIEW_MAP = "map";
+    private static final String VIEW_LIST = "list";
+    private static String CURRENT_VIEW;
     public static final float ZOOM_DEFAULT = 15.0f;
     public static final float ZOOM_CLOSE = 18.0f;
     public static final float ZOOM_TO_OPEN_PLACE = 20.0f;
     private Marker marker;
     private List<Place> placeList;
     private UIHelper uiHelper;
+    private Place placeSelected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_places, container, false);
         init();
         initEvents();
+        createMap();
 
         return view;
+    }
+
+    private void init() {
+        uiHelper = new UIHelper();
+        CURRENT_VIEW = VIEW_MAP;
+        setHasOptionsMenu(true);
+        application = (app) this.getActivity().getApplication();
+        uiHelper.placeListView.setOnItemLongClickListener(eventOnLongClickPlace());
+        uiHelper.placeListView.setOnItemClickListener(eventOnClickPlace());
+        fragment = this;
+        configureActionMode();
+    }
+
+    private AdapterView.OnItemLongClickListener eventOnLongClickPlace() {
+        return new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                PlaceFragment.this.placeSelected = ((PlaceAdapter.ItemHolder) view.getTag()).place;
+
+                if (uiHelper.mMode != null) {
+                    return false;
+                } else {
+                    uiHelper.mMode = getActivity().startActionMode(uiHelper.mCallback);
+                }
+
+                return false;
+            }
+        };
+    }
+
+    private AdapterView.OnItemClickListener eventOnClickPlace() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Place place = ((PlaceAdapter.ItemHolder) view.getTag()).place;
+                changeView();
+                moveCameraMap(new LatLng(place.getLatitude(), place.getLongitde()), ZOOM_CLOSE);
+            }
+        };
     }
 
     private void initEvents() {
@@ -81,6 +135,55 @@ public class PlaceFragment extends Fragment {
         });
     }
 
+    private void configureActionMode() {
+
+        uiHelper.mCallback = new ActionMode.Callback() {
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                uiHelper.mMode = null;
+            }
+
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.setTitle("1 selected");
+                getActivity().getMenuInflater().inflate(R.menu.context_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.item_menu_delete:
+                        deletePlace();
+                        mode.finish();
+                        break;
+                    case R.id.item_menu_edit:
+                        updatePlace();
+                        mode.finish();
+                        break;
+                }
+                return false;
+            }
+        };
+    }
+
+    private void updatePlace() {
+    }
+
+    private void deletePlace() {
+        application.adapter.delete(placeSelected);
+        Toast.makeText(getActivity().getBaseContext(), placeSelected.getTitle() + " was deleted!", Toast.LENGTH_LONG).show();
+        updatePlaceList();
+    }
+
+
     private void findByAddress(String sAddress) {
         new AddressToLatLongAsyncTask(
                 fragment.getActivity(),
@@ -92,6 +195,15 @@ public class PlaceFragment extends Fragment {
                     }
                 }
         ).execute();
+    }
+
+    private void updatePlaceList() {
+        uiHelper.placeListView.setAdapter(
+                new PlaceAdapter(
+                        fragment.getActivity(),
+                        R.layout.item_place,
+                        application.adapter.findAll(Place.class))
+        );
     }
 
     private void findByLatLong(LatLng latLng, final Place newPlace) {
@@ -112,18 +224,11 @@ public class PlaceFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                showDialog(place);
+                showDialogCreatePlace(place);
             }
         }, 500);
     }
 
-    private void init() {
-        uiHelper = new UIHelper();
-        setHasOptionsMenu(true);
-        application = (app) this.getActivity().getApplication();
-        fragment = this;
-        createMap();
-    }
 
     public void putPinsMap() {
         placeList = application.adapter.findAll(Place.class);
@@ -162,15 +267,7 @@ public class PlaceFragment extends Fragment {
         return new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                if (application.isInternetConnection(fragment.getActivity())
-                        && application.isGPSEnable(fragment.getActivity())) {
-//                    Place newPlace = new Place();
-//                    newPlace.setLatitude(marker.getPosition().latitude);
-//                    newPlace.setLongitde(marker.getPosition().longitude);
-//                    newPlace.setAddress(findAddressByMarker(marker));
-//                    marker.remove();
-//                    showDialog(newPlace);
-                }
+
             }
         };
     }
@@ -245,31 +342,59 @@ public class PlaceFragment extends Fragment {
 
                 if (application.isInternetConnection(this.getActivity())
                         && application.isGPSEnable(this.getActivity())) {
-//                    showDialog(null);
+//                    showDialogListPlace();
+                    changeView();
                 }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void showDialog(Place newPlace) {
+    private void changeView() {
+        if (CURRENT_VIEW.equals(VIEW_MAP)) {
+            CURRENT_VIEW = VIEW_LIST;
+            uiHelper.rlList.setVisibility(View.VISIBLE);
+            uiHelper.rlMap.setVisibility(View.GONE);
+            updatePlaceList();
+        } else if (CURRENT_VIEW.equals(VIEW_LIST)) {
+            CURRENT_VIEW = VIEW_MAP;
+            uiHelper.rlMap.setVisibility(View.VISIBLE);
+            uiHelper.rlList.setVisibility(View.GONE);
+        }
+    }
+
+    private void showDialogCreatePlace(Place newPlace) {
         application.placeFragment = this;
         FragmentManager fm = getFragmentManager();
         DialogCreatePlace dialogCreatePlace = new DialogCreatePlace();
         Bundle b = new Bundle();
-        b.putSerializable(BUNDLE_PLACE, newPlace);
+        b.putSerializable(BUNDLE_NEW_PLACE, newPlace);
         dialogCreatePlace.setArguments(b);
         dialogCreatePlace.setRetainInstance(true);
         dialogCreatePlace.show(fm, "fragment_name");
     }
 
+    private void showDialogListPlace() {
+        application.placeFragment = this;
+        FragmentManager fm = getFragmentManager();
+        DialogShowPlace dialogShowPlace = new DialogShowPlace();
+        dialogShowPlace.setRetainInstance(true);
+        dialogShowPlace.show(fm, "fragment_name");
+    }
+
     private class UIHelper {
         EditText address;
-//        LinearLayout btnOK;
+        ListView placeListView;
+        RelativeLayout rlMap;
+        RelativeLayout rlList;
+        ActionMode.Callback mCallback;
+        ActionMode mMode;
 
         public UIHelper() {
             this.address = (EditText) view.findViewById(R.id.place_edt_search);
-//            this.btnOK = (LinearLayout) view.findViewById(R.id.place_btn_search);
+            this.placeListView = (ListView) view.findViewById(R.id.place_list);
+            this.rlMap = (RelativeLayout) view.findViewById(R.id.rl_map);
+            this.rlList = (RelativeLayout) view.findViewById(R.id.rl_list);
         }
 
     }

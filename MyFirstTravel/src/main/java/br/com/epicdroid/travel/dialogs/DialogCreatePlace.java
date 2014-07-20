@@ -1,11 +1,7 @@
 package br.com.epicdroid.travel.dialogs;
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +12,16 @@ import android.widget.Toast;
 
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.SqlAdapter;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Required;
-
-import java.io.IOException;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.fragment.PlaceFragment;
-import br.com.epicdroid.travel.utils.AddressDTO;
+import br.com.epicdroid.travel.utils.KeyboardUtils;
 
 public class DialogCreatePlace extends DialogFragment {
 
@@ -51,7 +41,7 @@ public class DialogCreatePlace extends DialogFragment {
     }
 
     private void init() {
-        place = (Place)getArguments().getSerializable(BUNDLE_PLACE);
+        place = (Place) getArguments().getSerializable(BUNDLE_PLACE);
         fragment = this;
         uiHelper = new UIHelper();
         adapter = Persistence.getAdapter(fragment.getActivity());
@@ -59,7 +49,7 @@ public class DialogCreatePlace extends DialogFragment {
         setFields();
     }
 
-    private void setFields(){
+    private void setFields() {
         uiHelper.address.setText(place.getAddress());
     }
 
@@ -72,7 +62,7 @@ public class DialogCreatePlace extends DialogFragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((app)getActivity().getApplication()).placeFragment.removePinNewPlace();
+                ((app) getActivity().getApplication()).placeFragment.removePinNewPlace();
                 DialogCreatePlace.this.dismiss();
             }
         };
@@ -89,10 +79,11 @@ public class DialogCreatePlace extends DialogFragment {
 
     private void createPlace() {
         savePlace();
-        ((app)getActivity().getApplication()).placeFragment.putPinsMap();
+        ((app) getActivity().getApplication()).placeFragment.putPinsMap();
         LatLng latLng = new LatLng(place.getLatitude(), place.getLongitde());
-        ((app)getActivity().getApplication()).placeFragment.moveCameraMap(latLng, PlaceFragment.ZOOM_CLOSE);
-        ((app)getActivity().getApplication()).placeFragment.removePinNewPlace();
+        ((app) getActivity().getApplication()).placeFragment.moveCameraMap(latLng, PlaceFragment.ZOOM_CLOSE);
+        ((app) getActivity().getApplication()).placeFragment.removePinNewPlace();
+        KeyboardUtils.closeSoftKeyBoard(fragment.getActivity(), uiHelper.title);
         DialogCreatePlace.this.dismiss();
     }
 

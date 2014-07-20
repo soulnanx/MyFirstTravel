@@ -35,8 +35,9 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
         }
 
         if (place != null) {
-            itemHolder.value.setText("$" + place.getValue().toString());
+            itemHolder.address.setText(place.getAddress());
             itemHolder.title.setText(place.getTitle());
+            itemHolder.km.setText("50");
             itemHolder.place = place;
         }
 
@@ -45,13 +46,15 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
 
     public class ItemHolder {
         TextView title;
-        TextView value;
+        TextView km;
+        TextView address;
         public Place place;
 
         ItemHolder(View view, Place place) {
             this.place = place;
             this.title = (TextView) view.findViewById(R.id.item_txt_title);
-            this.value = (TextView) view.findViewById(R.id.item_txt_value);
+            this.km = (TextView) view.findViewById(R.id.item_txt_km);
+            this.address = (TextView) view.findViewById(R.id.item_txt_address);
         }
     }
 }

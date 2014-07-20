@@ -47,8 +47,8 @@ public class MainActivity extends FragmentActivity {
                     return new NoteFragment();
                 case FinanceFragment.POSITION:
                     return new FinanceFragment();
-                case ScheduleFragment.POSITION:
-                    return new ScheduleFragment();
+//                case ScheduleFragment.POSITION:
+//                    return new ScheduleFragment();
                 case PlaceFragment.POSITION:
                     return new PlaceFragment();
             }
@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
 
         @Override
@@ -72,8 +72,8 @@ public class MainActivity extends FragmentActivity {
                     return NoteFragment.NAME_TAB.toUpperCase();
                 case FinanceFragment.POSITION:
                     return FinanceFragment.NAME_TAB.toUpperCase();
-                case ScheduleFragment.POSITION:
-                    return ScheduleFragment.NAME_TAB.toUpperCase();
+//                case ScheduleFragment.POSITION:
+//                    return ScheduleFragment.NAME_TAB.toUpperCase();
                 case PlaceFragment.POSITION:
                     return PlaceFragment.NAME_TAB.toUpperCase();
 
