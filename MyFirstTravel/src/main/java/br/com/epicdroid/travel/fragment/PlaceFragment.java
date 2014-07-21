@@ -1,6 +1,11 @@
 package br.com.epicdroid.travel.fragment;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -211,6 +216,21 @@ public class PlaceFragment extends Fragment {
         putPinsMap();
     }
 
+    private void navigateToAddress(LatLng latLng) {
+        if (application.isInternetConnection(fragment.getActivity())
+                && application.isGPSEnable(fragment.getActivity())) {
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(
+                            "http://maps.google.com/maps?"
+                                    + "saddr="
+                                    + application.gps.getLatitude() + ","
+                                    + application.gps.getLongitude()
+                                    + "&daddr=" + latLng.latitude + "," + latLng.longitude));
+            intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
+            startActivity(intent);
+        }
+    }
+
 
     private void findByAddress(String sAddress) {
         new AddressToLatLongAsyncTask(
@@ -296,7 +316,7 @@ public class PlaceFragment extends Fragment {
         return new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-
+                navigateToAddress(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude));
             }
         };
     }
