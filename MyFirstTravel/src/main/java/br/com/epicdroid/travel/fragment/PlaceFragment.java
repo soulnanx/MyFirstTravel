@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -132,6 +136,26 @@ public class PlaceFragment extends Fragment {
                 }
                 return false;
             }
+
+        });
+
+        uiHelper.address.addTextChangedListener(new TextWatcher(){
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0){
+                    uiHelper.btnErase.setVisibility(View.VISIBLE);
+                } else {
+                    uiHelper.btnErase.setVisibility(View.INVISIBLE);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+
+        uiHelper.btnErase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uiHelper.address.getText().clear();
+            }
         });
     }
 
@@ -178,9 +202,13 @@ public class PlaceFragment extends Fragment {
     }
 
     private void deletePlace() {
-        application.adapter.delete(placeSelected);
-        Toast.makeText(getActivity().getBaseContext(), placeSelected.getTitle() + " was deleted!", Toast.LENGTH_LONG).show();
+        Place p = new Place();
+        p.setId(placeSelected.getId());
+        Toast.makeText(getActivity().getBaseContext(), placeSelected.getTitle() + " was deleted! (" +
+                application.adapter.delete(p) + ")"
+                , Toast.LENGTH_LONG).show();
         updatePlaceList();
+        putPinsMap();
     }
 
 
@@ -231,6 +259,7 @@ public class PlaceFragment extends Fragment {
 
 
     public void putPinsMap() {
+        map.clear();
         placeList = application.adapter.findAll(Place.class);
         if (!placeList.isEmpty()) {
             for (Place placeItem : placeList) {
@@ -258,7 +287,7 @@ public class PlaceFragment extends Fragment {
                 && application.isGPSEnable(this.getActivity())) {
             moveCameraMap(new LatLng(application.gps.getLatitude(), application.gps.getLongitude()), ZOOM_DEFAULT);
         }
-
+        map.setPadding(0, 120, 0, 0);
         putPinsMap();
         super.onStart();
     }
@@ -339,12 +368,7 @@ public class PlaceFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_new_note:
-
-                if (application.isInternetConnection(this.getActivity())
-                        && application.isGPSEnable(this.getActivity())) {
-//                    showDialogListPlace();
-                    changeView();
-                }
+            changeView();
         }
 
         return super.onOptionsItemSelected(item);
@@ -374,14 +398,6 @@ public class PlaceFragment extends Fragment {
         dialogCreatePlace.show(fm, "fragment_name");
     }
 
-    private void showDialogListPlace() {
-        application.placeFragment = this;
-        FragmentManager fm = getFragmentManager();
-        DialogShowPlace dialogShowPlace = new DialogShowPlace();
-        dialogShowPlace.setRetainInstance(true);
-        dialogShowPlace.show(fm, "fragment_name");
-    }
-
     private class UIHelper {
         EditText address;
         ListView placeListView;
@@ -389,12 +405,15 @@ public class PlaceFragment extends Fragment {
         RelativeLayout rlList;
         ActionMode.Callback mCallback;
         ActionMode mMode;
+        LinearLayout btnErase;
 
         public UIHelper() {
             this.address = (EditText) view.findViewById(R.id.place_edt_search);
             this.placeListView = (ListView) view.findViewById(R.id.place_list);
             this.rlMap = (RelativeLayout) view.findViewById(R.id.rl_map);
             this.rlList = (RelativeLayout) view.findViewById(R.id.rl_list);
+            this.rlList = (RelativeLayout) view.findViewById(R.id.rl_list);
+            this.btnErase = (LinearLayout) view.findViewById(R.id.place_btn_erase);
         }
 
     }

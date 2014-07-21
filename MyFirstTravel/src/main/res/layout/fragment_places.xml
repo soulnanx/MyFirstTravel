@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="7dp"
-    android:paddingRight="7dp">
+    android:paddingLeft="7dp">
 
 
     <RelativeLayout
@@ -21,7 +20,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:background="@android:color/darker_gray"
             android:orientation="horizontal"
             android:padding="1dp">
@@ -36,10 +36,11 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginBottom="7dp"
-                    android:layout_marginTop="7dp"
                     android:layout_marginRight="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="1"
                     android:background="@android:color/white"
                     android:src="@drawable/ic_action_search" />
 
@@ -47,31 +48,38 @@
                     android:id="@+id/place_edt_search"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="8"
                     android:layout_marginBottom="7dp"
                     android:layout_marginTop="7dp"
+                    android:layout_weight="8"
                     android:background="@android:color/white"
+                    android:hint="@string/dialog_hint_address"
                     android:imeOptions="actionSearch"
-                    android:textColor="@color/text_gray"
                     android:singleLine="true"
-                    android:hint="@string/dialog_hint_address"/>
+                    android:textColor="@color/text_gray" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    />
-
-                <ImageView
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/place_btn_erase"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:src="@drawable/ic_action_cancel" />
+                    android:layout_margin="7dp"
+                    android:visibility="invisible"
+                    android:layout_weight="1">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:src="@drawable/ic_action_cancel" />
+                </LinearLayout>
+
 
             </LinearLayout>
         </LinearLayout>
@@ -81,14 +89,14 @@
     <RelativeLayout
         android:id="@+id/rl_list"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <ListView
             android:id="@+id/place_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal" />
 
     </RelativeLayout>
 

@@ -141,10 +141,6 @@ public class FinanceFragment extends Fragment {
         setList();
     }
 
-    private void updateNote() {
-//        new DialogUpdateNote(FinanceFragment.this.getActivity(), FinanceFragment.this, debitSelected).show();
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_finance, menu);
