@@ -36,6 +36,7 @@ import java.net.URL;
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.entity.Document;
 import br.com.epicdroid.travel.fragment.DocumentFragment;
+import br.com.epicdroid.travel.utils.ImageUtils;
 
 public class DialogCreateDocument extends DialogFragment {
 
@@ -101,8 +102,7 @@ public class DialogCreateDocument extends DialogFragment {
     }
 
     private void onClickSearchOnGallery() {
-        Intent i = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
@@ -111,35 +111,14 @@ public class DialogCreateDocument extends DialogFragment {
         if (requestCode == RESULT_LOAD_IMAGE) {
             if (data != null) {
                 try {
-                    String path = searchImageByQuery(data);
-                    drawableFromUrl(path);
+                    String path = ImageUtils.searchImageByQuery(DialogCreateDocument.this.getActivity(), data);
+                    uiHelper.imageDoc.setImageBitmap(ImageUtils.getBitmapFromFilePath(path));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private String searchImageByQuery(Intent data) throws Exception {
-        Uri selectedImage = data.getData();
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Cursor cursor = DialogCreateDocument.this.getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String pathImage = cursor.getString(columnIndex);
-        cursor.close();
-
-        return pathImage;
-    }
-
-    public void drawableFromUrl(String url) throws IOException {
-//        String sdcardPath = Environment.getExternalStorageDirectory().toString();
-        File imgFile = new  File(url);
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            uiHelper.imageDoc.setImageBitmap(myBitmap);
-        }
     }
 
     private class UIHelper implements Validator.ValidationListener {
