@@ -10,11 +10,12 @@ import android.support.v4.view.ViewPager;
 import java.util.Locale;
 
 import br.com.epicdroid.travel.R;
+import br.com.epicdroid.travel.fragment.DocumentFragment;
 import br.com.epicdroid.travel.fragment.FinanceFragment;
 import br.com.epicdroid.travel.fragment.NoteFragment;
 import br.com.epicdroid.travel.fragment.PlaceFragment;
-import br.com.epicdroid.travel.fragment.ScheduleFragment;
 import br.com.epicdroid.travel.fragment.TravelFragment;
+import br.com.epicdroid.travel.components.SimpleAlertDialog;
 
 public class MainActivity extends FragmentActivity {
 
@@ -51,6 +52,8 @@ public class MainActivity extends FragmentActivity {
 //                    return new ScheduleFragment();
                 case PlaceFragment.POSITION:
                     return new PlaceFragment();
+                case DocumentFragment.POSITION:
+                    return new DocumentFragment();
             }
 
             return null;
@@ -58,7 +61,7 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -76,10 +79,25 @@ public class MainActivity extends FragmentActivity {
 //                    return ScheduleFragment.NAME_TAB.toUpperCase();
                 case PlaceFragment.POSITION:
                     return PlaceFragment.NAME_TAB.toUpperCase();
+                case DocumentFragment.POSITION:
+                    return DocumentFragment.NAME_TAB.toUpperCase();
 
             }
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new SimpleAlertDialog(this, "My First Travel", "Do you want to exit application?") {
+            @Override
+            public void onDialogReturn(boolean isPositive) {
+                if (!isPositive){
+                    finish();
+                    System.exit(0);
+                }
+            }
+        };
     }
 
 }

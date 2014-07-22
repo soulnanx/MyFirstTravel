@@ -262,7 +262,7 @@ public class PlaceFragment extends Fragment {
                 new DelegateReturnAddress() {
                     @Override
                     public void onReturn(AddressDTO address) {
-                        newPlace.setAddress(address.toString());
+                           newPlace.setAddress(address.toString());
                         waitAndShowDialog(newPlace);
                     }
                 }
