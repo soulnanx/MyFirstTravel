@@ -33,7 +33,7 @@ public class ScheduleFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.item_new_note:
 //                new DialogCreateNote(ScheduleFragment.this.getActivity()).show();
         }

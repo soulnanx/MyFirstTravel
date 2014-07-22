@@ -78,7 +78,7 @@ public class NoteFragment extends Fragment {
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
-                switch(item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.item_menu_delete:
                         deleteNote();
                         mode.finish();
@@ -122,7 +122,7 @@ public class NoteFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 NoteFragment.this.noteSelected = ((NoteAdapter.ItemHolder) view.getTag()).note;
 
-                if(mMode!=null){
+                if (mMode != null) {
                     return false;
                 } else {
                     mMode = getActivity().startActionMode(mCallback);
@@ -142,7 +142,7 @@ public class NoteFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.item_new_note:
                 new DialogCreateNote(NoteFragment.this.getActivity(), this).show();
         }
@@ -150,7 +150,7 @@ public class NoteFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setList(){
+    public void setList() {
         listViewNotes.setAdapter(new NoteAdapter(NoteFragment.this.getActivity(), R.layout.item_note, adapter.findAll(Note.class)));
     }
 

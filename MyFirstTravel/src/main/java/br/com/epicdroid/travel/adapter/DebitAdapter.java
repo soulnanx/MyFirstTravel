@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.entity.Debit;
+import br.com.epicdroid.travel.utils.TextFormatUtils;
 
 public class DebitAdapter extends ArrayAdapter<Debit> {
 
@@ -35,7 +37,7 @@ public class DebitAdapter extends ArrayAdapter<Debit> {
         }
 
         if (debit != null) {
-            itemHolder.value.setText("$" + debit.getValue().toString());
+            itemHolder.value.setText(TextFormatUtils.showAsMoney(new BigDecimal(debit.getValue().toString())));
             itemHolder.title.setText(debit.getTitle());
             itemHolder.debit = debit;
         }

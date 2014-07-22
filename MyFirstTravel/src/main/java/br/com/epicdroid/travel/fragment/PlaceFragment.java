@@ -1,10 +1,7 @@
 package br.com.epicdroid.travel.fragment;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +21,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -42,7 +38,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.adapter.NoteAdapter;
 import br.com.epicdroid.travel.adapter.PlaceAdapter;
 import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.asyncTask.AddressToLatLongAsyncTask;
@@ -50,7 +45,6 @@ import br.com.epicdroid.travel.asyncTask.LatLongToAddressAsyncTask;
 import br.com.epicdroid.travel.delegate.DelegateReturnAddress;
 import br.com.epicdroid.travel.delegate.DelegateReturnLatLong;
 import br.com.epicdroid.travel.dialogs.DialogCreatePlace;
-import br.com.epicdroid.travel.dialogs.DialogShowPlace;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.utils.AddressDTO;
 import br.com.epicdroid.travel.utils.KeyboardUtils;
@@ -75,6 +69,7 @@ public class PlaceFragment extends Fragment {
     private List<Place> placeList;
     private UIHelper uiHelper;
     private Place placeSelected;
+    private Menu menu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -144,16 +139,20 @@ public class PlaceFragment extends Fragment {
 
         });
 
-        uiHelper.address.addTextChangedListener(new TextWatcher(){
+        uiHelper.address.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0){
+                if (s.length() > 0) {
                     uiHelper.btnErase.setVisibility(View.VISIBLE);
                 } else {
                     uiHelper.btnErase.setVisibility(View.INVISIBLE);
                 }
             }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-            public void onTextChanged(CharSequence s, int start, int before, int count){}
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
         });
 
         uiHelper.btnErase.setOnClickListener(new View.OnClickListener() {
@@ -225,8 +224,10 @@ public class PlaceFragment extends Fragment {
                                     + "saddr="
                                     + application.gps.getLatitude() + ","
                                     + application.gps.getLongitude()
-                                    + "&daddr=" + latLng.latitude + "," + latLng.longitude));
-            intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
+                                    + "&daddr=" + latLng.latitude + "," + latLng.longitude
+                    )
+            );
+            intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
             startActivity(intent);
         }
     }
@@ -379,28 +380,32 @@ public class PlaceFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        this.menu = menu;
         menu.clear();
-        inflater.inflate(R.menu.menu_note, menu);
+        inflater.inflate(R.menu.menu_place, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_new_note:
-            changeView();
+            case R.id.item_show_as_list_map:
+                changeView();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void changeView() {
+
         if (CURRENT_VIEW.equals(VIEW_MAP)) {
+//            menu.getItem(0).setIcon(R.drawable.ic_action_view_as_list);
             CURRENT_VIEW = VIEW_LIST;
             uiHelper.rlList.setVisibility(View.VISIBLE);
             uiHelper.rlMap.setVisibility(View.GONE);
             updatePlaceList();
         } else if (CURRENT_VIEW.equals(VIEW_LIST)) {
+//            menu.getItem(0).setIcon(R.drawable.ic_action_map);
             CURRENT_VIEW = VIEW_MAP;
             uiHelper.rlMap.setVisibility(View.VISIBLE);
             uiHelper.rlList.setVisibility(View.GONE);

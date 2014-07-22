@@ -11,14 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="INFO"
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginLeft="7dp"
+        android:textColor="@android:color/holo_blue_dark"
         android:textSize="15dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginBottom="5dp"/>
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/holo_blue_dark"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,81 +32,178 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_gray"
+                android:text="travel"
+                android:textSize="12sp"/>
+
+            <TextView
                 android:id="@+id/travel_show_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Canada"
                 android:textColor="@android:color/holo_blue_dark"
-                android:textSize="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:text="travel name"
-                android:textSize="12sp"/>
+                android:textSize="18dp"/>
         </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
 
     <!--START TRAVEL - FINISH TRAVEL - REMAINING DAYS-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="7dp"
         android:orientation="horizontal"
-        android:layout_marginTop="9dp"
         android:weightSum="3">
 
         <!-- START TRAVEL-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:layout_weight="1">
 
-
-            <TextView
-                android:id="@+id/travel_show_start_travel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="04-JUN-2014"
-                android:textColor="@android:color/holo_blue_dark"
-                android:textSize="15sp"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="start"
+                android:text="check-in"
+                android:textColor="@color/text_gray"
                 android:textSize="12sp"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="7dp"
+                android:layout_weight="1">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/travel_show_start_travel_txt_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2014"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="10sp"/>
+
+
+                    <TextView
+                        android:id="@+id/travel_show_start_travel_txt_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JUN"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="10sp"/>
+
+
+                    <TextView
+                        android:id="@+id/travel_show_start_travel_txt_day_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="THU"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="10sp"/>
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/travel_show_start_travel_txt_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="04"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="40sp"/>
+                    </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- FINISH TRAVEL-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/travel_show_finish_travel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="24-JUN-2014"
-                android:textColor="@android:color/holo_blue_dark"
-                android:textSize="15sp"/>
+                android:text="check-out"
+                android:textColor="@color/text_gray"
+                android:textSize="12sp"/>
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="finish"/>
+                android:orientation="horizontal"
+                android:layout_marginLeft="7dp"
+                android:layout_weight="1">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/travel_show_finish_travel_txt_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2014"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="10sp"/>
+
+
+                    <TextView
+                        android:id="@+id/travel_show_finish_travel_txt_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AUG"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="10sp"/>
+
+
+                    <TextView
+                        android:id="@+id/travel_show_finish_travel_txt_day_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="THU"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="10sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/travel_show_finish_travel_txt_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="27"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="40sp"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -138,6 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="days remaining"
+                android:textColor="@color/text_gray"
                 android:textSize="12sp"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
@@ -149,15 +246,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DEBITS"
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="9dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:layout_marginTop="15dp"
         android:textSize="15dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginBottom="5dp"/>
+        android:layout_height="1dp"
+        android:layout_marginBottom="9dp"
+        android:background="@android:color/holo_blue_dark"/>
 
     <!--DEBITS-->
     <LinearLayout
@@ -187,6 +283,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="initial"
+                android:textColor="@color/text_gray"
                 android:textSize="12sp"/>
         </LinearLayout>
 
@@ -211,6 +308,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="debits"
+                android:textColor="@color/text_gray"
                 android:textSize="12sp"/>
         </LinearLayout>
 
@@ -235,6 +333,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="current"
+                android:textColor="@color/text_gray"
                 android:textSize="12sp"/>
         </LinearLayout>
     </LinearLayout>

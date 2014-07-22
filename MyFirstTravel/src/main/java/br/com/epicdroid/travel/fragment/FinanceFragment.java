@@ -44,6 +44,7 @@ public class FinanceFragment extends Fragment {
         configureActionMode();
         return view;
     }
+
     private void init() {
         application = (app) getActivity().getApplication();
         setHasOptionsMenu(true);
@@ -62,10 +63,10 @@ public class FinanceFragment extends Fragment {
         uiHelper.currentMoney.setText(showAsMoney(application.calculateCurrentMoney()));
     }
 
-    private String showAsMoney(BigDecimal money){
+    private String showAsMoney(BigDecimal money) {
         NumberFormat usdCostFormat = NumberFormat.getCurrencyInstance(Locale.US);
-        usdCostFormat.setMinimumFractionDigits( 2 );
-        usdCostFormat.setMaximumFractionDigits( 2 );
+        usdCostFormat.setMinimumFractionDigits(2);
+        usdCostFormat.setMaximumFractionDigits(2);
         return usdCostFormat.format(money.doubleValue());
     }
 
@@ -85,7 +86,7 @@ public class FinanceFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FinanceFragment.this.debitSelected = ((DebitAdapter.ItemHolder) view.getTag()).debit;
 
-                if(uiHelper.mMode!=null){
+                if (uiHelper.mMode != null) {
                     return false;
                 } else {
                     uiHelper.mMode = getActivity().startActionMode(uiHelper.mCallback);
@@ -120,7 +121,7 @@ public class FinanceFragment extends Fragment {
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
-                switch(item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.item_menu_delete:
                         deleteDebit();
                         mode.finish();
@@ -149,7 +150,7 @@ public class FinanceFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.item_new_debit:
                 new DialogCreateDebit(FinanceFragment.this.getActivity(), FinanceFragment.this).show();
         }
@@ -157,11 +158,11 @@ public class FinanceFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setList(){
+    public void setList() {
         uiHelper.listViewDebits.setAdapter(new DebitAdapter(FinanceFragment.this.getActivity(), R.layout.item_debit, application.adapter.findAll(Debit.class)));
     }
 
-    private class UIHelper{
+    private class UIHelper {
         ListView listViewDebits;
         ActionMode.Callback mCallback;
         ActionMode mMode;
@@ -171,9 +172,9 @@ public class FinanceFragment extends Fragment {
 
         public UIHelper(View view) {
             this.listViewDebits = (ListView) view.findViewById(R.id.debit_list);
-            this.initialMoney = (TextView)view.findViewById(R.id.travel_show_initial_money);
-            this.totalDebits = (TextView)view.findViewById(R.id.travel_show_total_debits);
-            this.currentMoney = (TextView)view.findViewById(R.id.travel_show_current_money);
+            this.initialMoney = (TextView) view.findViewById(R.id.travel_show_initial_money);
+            this.totalDebits = (TextView) view.findViewById(R.id.travel_show_total_debits);
+            this.currentMoney = (TextView) view.findViewById(R.id.travel_show_current_money);
         }
     }
 

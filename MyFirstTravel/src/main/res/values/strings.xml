@@ -9,6 +9,9 @@
     <string name="item_menu_new_note">+ note</string>
     <string name="item_menu_new_task">+ task</string>
     <string name="item_menu_new_debit">+ debit</string>
+    <string name="item_menu_show_as_list">Show as List</string>
+
+
 
     <!-- COMMONS Dialog -->
     <string name="dialog_ok">OK</string>
@@ -20,7 +23,7 @@
     <string name="dialog_label_money">MONEY:</string>
     <string name="dialog_label_start_travel">CHECK IN:</string>
     <string name="dialog_label_finish_travel">CHECK OUT:</string>
-    <string name="dialog_hint_address">Address to find...</string>
+    <string name="dialog_hint_address">Search</string>
 
     <!-- NOTE Dialog -->
     <string name="dialog_create_note_title">Create a new note</string>

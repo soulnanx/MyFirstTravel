@@ -14,6 +14,12 @@ public class TextFormatUtils {
         return (new SimpleDateFormat("dd MMM yyyy").format(c.getTime()).toUpperCase());
     }
 
+    public static String formatDateToField(long timeMillis, String pattern) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(timeMillis);
+        return (new SimpleDateFormat(pattern).format(c.getTime()).toUpperCase());
+    }
+
     public static String showAsMoney(BigDecimal money){
         NumberFormat usdCostFormat = NumberFormat.getCurrencyInstance(Locale.US);
         usdCostFormat.setMinimumFractionDigits( 2 );
@@ -22,7 +28,17 @@ public class TextFormatUtils {
     }
 
     public static String calculateRemainingDays(long date1, long date2) {
-        long timeDifInMilliSec =  date1 - date2;
+        Calendar c = Calendar.getInstance();
+        long currentDate = c.getTimeInMillis();
+        long timeDifInMilliSec;
+
+        if (currentDate > date2){
+            timeDifInMilliSec = currentDate - date2;
+        } else {
+            timeDifInMilliSec = date1 - date2;
+        }
+
+
         long timeDifDays = timeDifInMilliSec / (24 * 60 * 60 * 1000);
 
         return String.valueOf(timeDifDays);

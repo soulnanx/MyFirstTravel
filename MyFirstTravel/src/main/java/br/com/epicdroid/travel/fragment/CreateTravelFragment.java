@@ -1,15 +1,10 @@
 package br.com.epicdroid.travel.fragment;
 
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -66,8 +61,8 @@ public class CreateTravelFragment extends Fragment {
                 new DialogDatePicker() {
                     @Override
                     public void setDate(Calendar c) {
-                        ((TextView)view).setText(new SimpleDateFormat("dd MMM yyyy").format(c.getTime()).toUpperCase());
-                        switch (view.getId()){
+                        ((TextView) view).setText(new SimpleDateFormat("dd MMM yyyy").format(c.getTime()).toUpperCase());
+                        switch (view.getId()) {
                             case R.id.travel_create_dialog_edt_start_travel:
                                 travel.setStartTravel(c.getTimeInMillis());
                             case R.id.travel_create_dialog_edt_finish_travel:
@@ -114,12 +109,12 @@ public class CreateTravelFragment extends Fragment {
         LinearLayout btnOK;
 
         public UIHelper(View view) {
-            this.title = (EditText)view.findViewById(R.id.travel_create_dialog_edt_title);
-            this.initialMoney = (EditText)view.findViewById(R.id.travel_create_dialog_edt_money);
-            this.finishTravel = (TextView)view.findViewById(R.id.travel_create_dialog_edt_finish_travel);
-            this.startTravel = (TextView)view.findViewById(R.id.travel_create_dialog_edt_start_travel);
+            this.title = (EditText) view.findViewById(R.id.travel_create_dialog_edt_title);
+            this.initialMoney = (EditText) view.findViewById(R.id.travel_create_dialog_edt_money);
+            this.finishTravel = (TextView) view.findViewById(R.id.travel_create_dialog_edt_finish_travel);
+            this.startTravel = (TextView) view.findViewById(R.id.travel_create_dialog_edt_start_travel);
 
-            this.btnOK = (LinearLayout)view.findViewById(R.id.travel_create_dialog_btn_ok);
+            this.btnOK = (LinearLayout) view.findViewById(R.id.travel_create_dialog_btn_ok);
             validator = new Validator(this);
             validator.setValidationListener(this);
         }
@@ -147,7 +142,6 @@ public class CreateTravelFragment extends Fragment {
         Intent intent = new Intent(CreateTravelFragment.this.getActivity(), c);
         startActivity(intent);
     }
-
 
 
 }
