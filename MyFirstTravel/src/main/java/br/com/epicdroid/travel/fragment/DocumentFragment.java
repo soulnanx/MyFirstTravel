@@ -15,16 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.codeslap.persistence.Persistence;
-import com.codeslap.persistence.SqlAdapter;
-
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.DocumentAdapter;
 import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.dialogs.DialogCreateDocument;
-import br.com.epicdroid.travel.dialogs.DialogCreatePlace;
 import br.com.epicdroid.travel.entity.Document;
-import br.com.epicdroid.travel.entity.Place;
+import br.com.epicdroid.travel.utils.ImageUtils;
 
 public class DocumentFragment extends Fragment {
 
@@ -51,8 +47,8 @@ public class DocumentFragment extends Fragment {
         setHasOptionsMenu(true);
         application = (app) this.getActivity().getApplication();
         listViewDocs = (ListView) view.findViewById(R.id.document_list);
-        listViewDocs.setOnItemLongClickListener(eventOnLongClickNote());
-        listViewDocs.setOnItemClickListener(eventOnClickNote());
+        listViewDocs.setOnItemLongClickListener(eventOnLongClickDocument());
+        listViewDocs.setOnItemClickListener(eventOnClickDocument());
         setList();
     }
 
@@ -82,11 +78,11 @@ public class DocumentFragment extends Fragment {
 
                 switch (item.getItemId()) {
                     case R.id.item_menu_delete:
-                        deleteNote();
+                        deleteDocument();
                         mode.finish();
                         break;
                     case R.id.item_menu_edit:
-                        updateNote();
+                        updateDocument();
                         mode.finish();
                         break;
                 }
@@ -95,28 +91,31 @@ public class DocumentFragment extends Fragment {
         };
     }
 
-    private void deleteNote() {
-//        adapter.delete(docSelected);
-        Toast.makeText(getActivity().getBaseContext(), docSelected.getTitle() + " was deleted!", Toast.LENGTH_LONG).show();
+    private void deleteDocument() {
+        Document document = new Document();
+        document.setId(docSelected.getId());
+        Toast.makeText(getActivity().getBaseContext(),
+                docSelected.getTitle() + " was deleted!(" + application.adapter.delete(docSelected) + ")",
+                Toast.LENGTH_LONG).show();
         setList();
     }
 
-    private void updateNote() {
+    private void updateDocument() {
 //        new DialogUpdateNote(DocumentFragment.this.getActivity(), DocumentFragment.this, docSelected).show();
     }
 
-    private AdapterView.OnItemClickListener eventOnClickNote() {
+    private AdapterView.OnItemClickListener eventOnClickDocument() {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 DocumentFragment.this.docSelected = ((DocumentAdapter.ItemHolder) view.getTag()).document;
-//                new DialogShowNote(DocumentFragment.this.getActivity(), docSelected).show();
+                ImageUtils.openImageOnGallery(DocumentFragment.this.getActivity(), docSelected.getImagePath());
             }
         };
     }
 
 
-    private AdapterView.OnItemLongClickListener eventOnLongClickNote() {
+    private AdapterView.OnItemLongClickListener eventOnLongClickDocument() {
         return new AdapterView.OnItemLongClickListener() {
 
 
@@ -153,17 +152,15 @@ public class DocumentFragment extends Fragment {
     }
 
     private void showDialogCreatePlace() {
+        application.documentFragment = this;
         FragmentManager fm = getFragmentManager();
         DialogCreateDocument dialogCreateDocument = new DialogCreateDocument();
-//        Bundle b = new Bundle();
-//        b.putSerializable(BUNDLE_NEW_PLACE, newPlace);
-//        dialogCreatePlace.setArguments(b);
         dialogCreateDocument.setRetainInstance(true);
         dialogCreateDocument.show(fm, "fragment_name");
     }
 
     public void setList() {
-//        listViewDocs.setAdapter(new DocumentAdapter(DocumentFragment.this.getActivity(), R.layout.item_document, adapter.findAll(Document.class)));
+        listViewDocs.setAdapter(new DocumentAdapter(DocumentFragment.this.getActivity(), R.layout.item_document, application.adapter.findAll(Document.class)));
     }
 
 }

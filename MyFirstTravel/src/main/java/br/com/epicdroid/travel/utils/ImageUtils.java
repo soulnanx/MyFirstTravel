@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import java.io.File;
-import java.io.IOException;
 
 public class ImageUtils {
 
@@ -25,11 +24,25 @@ public class ImageUtils {
         return pathImage;
     }
 
-    public static Bitmap getBitmapFromFilePath(String url) throws IOException {
-        File imgFile = new  File(url);
-        if(imgFile.exists()){
-            return BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+    public static Bitmap getBitmapFromFilePath(String url) {
+        File imgFile = new File(url);
+        if (imgFile.exists()) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = false;
+            options.inSampleSize = 2;
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+            options.inDither = true;
+
+            return BitmapFactory.decodeFile(imgFile.getAbsolutePath(), options);
         }
         return null;
+    }
+
+    public static void openImageOnGallery(Context context, String path) {
+        Uri pathUri = Uri.fromFile(new File(path));
+        Intent openGallery = new Intent(Intent.ACTION_VIEW);
+        openGallery.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        openGallery.setDataAndTypeAndNormalize(pathUri, Intent.normalizeMimeType("image/png"));
+        context.startActivity(openGallery);
     }
 }

@@ -37,7 +37,7 @@ public class DialogCreateTravel extends Dialog{
     }
 
     private void init() {
-        this.setContentView(R.layout.dialog_create_travel);
+        this.setContentView(R.layout.fragment_create_travel);
         uiHelper = new UIHelper(this);
         this.setTitle(context.getString(R.string.dialog_create_debit_title));
         adapter = Persistence.getAdapter(context);

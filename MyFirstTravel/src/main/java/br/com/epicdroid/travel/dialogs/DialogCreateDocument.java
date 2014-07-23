@@ -1,16 +1,7 @@
 package br.com.epicdroid.travel.dialogs;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,35 +9,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codeslap.persistence.Persistence;
-import com.codeslap.persistence.SqlAdapter;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Required;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import br.com.epicdroid.travel.R;
+import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.entity.Document;
-import br.com.epicdroid.travel.fragment.DocumentFragment;
 import br.com.epicdroid.travel.utils.ImageUtils;
 
 public class DialogCreateDocument extends DialogFragment {
 
-    private static final int RESULT_OK = 1;
-    private static final int REQUEST_DETALHE_NOTIFICACAO = 0;
     private static final int RESULT_LOAD_IMAGE = 2;
-    UIHelper uiHelper;
-    SqlAdapter adapter;
-    Context context;
+    private UIHelper uiHelper;
     private View view;
+    private app application;
+    private Document document;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,11 +37,19 @@ public class DialogCreateDocument extends DialogFragment {
         return view;
     }
 
+    private void init() {
+        document = new Document();
+        application = (app) this.getActivity().getApplication();
+        uiHelper = new UIHelper();
+        getDialog().setTitle("Create new document");
+    }
+
     private void initEvents() {
         uiHelper.btnOK.setOnClickListener(eventOK());
         uiHelper.btnCancel.setOnClickListener(eventCancel());
         uiHelper.imageDoc.setOnClickListener(eventClickImg());
     }
+
 
     private View.OnClickListener eventClickImg() {
         return new View.OnClickListener() {
@@ -70,7 +59,6 @@ public class DialogCreateDocument extends DialogFragment {
             }
         };
     }
-
 
     private View.OnClickListener eventCancel() {
         return new View.OnClickListener() {
@@ -90,15 +78,17 @@ public class DialogCreateDocument extends DialogFragment {
         };
     }
 
-    private void saveDocument() {
-        adapter.store(new Document());
-//        fragment.setList();
+    private void createDocument() {
+        saveDocument();
+        application.documentFragment.setList();
         DialogCreateDocument.this.dismiss();
     }
 
-    private void init() {
-        uiHelper = new UIHelper();
-        adapter = Persistence.getAdapter(context);
+    private void saveDocument() {
+        document.setTitle(uiHelper.title.getText().toString());
+        document.setDescription(uiHelper.description.getText().toString());
+        application.adapter.store(document);
+//
     }
 
     private void onClickSearchOnGallery() {
@@ -112,7 +102,9 @@ public class DialogCreateDocument extends DialogFragment {
             if (data != null) {
                 try {
                     String path = ImageUtils.searchImageByQuery(DialogCreateDocument.this.getActivity(), data);
+                    document.setImagePath(path);
                     uiHelper.imageDoc.setImageBitmap(ImageUtils.getBitmapFromFilePath(path));
+                    uiHelper.imgValidation.setText(path);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -125,9 +117,12 @@ public class DialogCreateDocument extends DialogFragment {
         final Validator validator;
 
         @Required(order = 1, message = "it's mandatory =(")
-        EditText title;
+        TextView imgValidation;
 
         @Required(order = 2, message = "it's mandatory =(")
+        EditText title;
+
+        @Required(order = 3, message = "it's mandatory =(")
         EditText description;
 
         ImageView imageDoc;
@@ -137,6 +132,7 @@ public class DialogCreateDocument extends DialogFragment {
 
         public UIHelper() {
             this.title = (EditText) view.findViewById(R.id.document_create_dialog_edt_title);
+            this.imgValidation = (TextView) view.findViewById(R.id.document_create_dialog_img_txt);
             this.description = (EditText) view.findViewById(R.id.document_create_dialog_edt_description);
             this.imageDoc = (ImageView) view.findViewById(R.id.document_create_dialog_img);
             this.btnOK = (LinearLayout) view.findViewById(R.id.document_create_dialog_btn_ok);
@@ -147,7 +143,7 @@ public class DialogCreateDocument extends DialogFragment {
         }
 
         public void onValidationSucceeded() {
-            saveDocument();
+            createDocument();
         }
 
         public void onValidationFailed(View failedView, Rule<?> failedRule) {
@@ -156,8 +152,11 @@ public class DialogCreateDocument extends DialogFragment {
             if (failedView instanceof EditText) {
                 failedView.requestFocus();
                 ((EditText) failedView).setError(message);
+            } else if (failedView instanceof TextView) {
+                failedView.requestFocus();
+                ((TextView) failedView).setError(message);
             } else {
-                Toast.makeText( DialogCreateDocument.this.getActivity(), message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DialogCreateDocument.this.getActivity(), message, Toast.LENGTH_SHORT).show();
             }
         }
     }

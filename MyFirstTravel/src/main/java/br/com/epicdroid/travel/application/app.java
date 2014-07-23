@@ -12,11 +12,13 @@ import com.codeslap.persistence.SqlAdapter;
 import java.math.BigDecimal;
 import java.util.List;
 
+import br.com.epicdroid.travel.entity.Document;
 import br.com.epicdroid.travel.entity.Note;
 import br.com.epicdroid.travel.entity.Debit;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.entity.Task;
 import br.com.epicdroid.travel.entity.Travel;
+import br.com.epicdroid.travel.fragment.DocumentFragment;
 import br.com.epicdroid.travel.fragment.PlaceFragment;
 import br.com.epicdroid.travel.utils.AlertDialogManagerUtils;
 import br.com.epicdroid.travel.utils.ConnectionDetectorUtils;
@@ -29,12 +31,13 @@ public class app extends Application {
     public Travel travel;
     public GPSTrackerUtils gps;
     public PlaceFragment placeFragment;
+    public DocumentFragment documentFragment;
 
     @Override
     public void onCreate() {
         super.onCreate();
         DatabaseSpec database = PersistenceConfig.registerSpec(7);
-        database.match(Note.class, Debit.class, Place.class, Task.class, Travel.class);
+        database.match(Note.class, Debit.class, Place.class, Task.class, Travel.class, Document.class);
         init();
     }
 

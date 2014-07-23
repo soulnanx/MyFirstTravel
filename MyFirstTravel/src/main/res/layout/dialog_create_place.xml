@@ -48,9 +48,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:ellipsize="end"
+            android:imeOptions="actionDone"
+            android:maxLength="70"
             android:textColor="@color/text_gray"
-            android:lines="1" />
+            android:singleLine="true" />
 
     </LinearLayout>
 

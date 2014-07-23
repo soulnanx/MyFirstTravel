@@ -8,18 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.entity.Document;
-import br.com.epicdroid.travel.utils.TextFormatUtils;
+import br.com.epicdroid.travel.utils.ImageUtils;
 
-/**
- * Created by call on 7/22/14.
- */
 public class DocumentAdapter extends ArrayAdapter<Document> {
 
     private int resource;
@@ -45,8 +39,7 @@ public class DocumentAdapter extends ArrayAdapter<Document> {
         if (document != null) {
             itemHolder.description.setText(document.getDescription().toString());
             itemHolder.title.setText(document.getTitle());
-            UrlImageViewHelper.setUrlDrawable(itemHolder.image, document.getImagePath());
-
+            itemHolder.image.setImageBitmap(ImageUtils.getBitmapFromFilePath(document.getImagePath()));
             itemHolder.document = document;
         }
 
