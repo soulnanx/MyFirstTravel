@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
+import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.entity.Place;
+import br.com.epicdroid.travel.utils.GPSTrackerUtils;
 
 public class PlaceAdapter extends ArrayAdapter<Place> {
 
@@ -37,7 +41,7 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
         if (place != null) {
             itemHolder.address.setText(place.getAddress());
             itemHolder.title.setText(place.getTitle());
-            itemHolder.km.setText("50");
+            itemHolder.km.setText(formatDistance(new LatLng(place.getLatitude(), place.getLongitde())));
             itemHolder.place = place;
         }
 
@@ -56,5 +60,11 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
             this.km = (TextView) view.findViewById(R.id.item_txt_km);
             this.address = (TextView) view.findViewById(R.id.item_txt_address);
         }
+    }
+
+    private String formatDistance(LatLng latLngPlace){
+        app application = (app)getContext().getApplicationContext();
+        LatLng latLng = new LatLng(application.gps.getLongitude(), application.gps.getLongitude());
+        return GPSTrackerUtils.formatDistanceText(GPSTrackerUtils.calculateBetween(latLngPlace, latLng));
     }
 }

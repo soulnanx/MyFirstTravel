@@ -13,6 +13,10 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.text.DecimalFormat;
+
 public class GPSTrackerUtils extends Service implements LocationListener {
 
     private final Context mContext;
@@ -203,5 +207,37 @@ public class GPSTrackerUtils extends Service implements LocationListener {
     public IBinder onBind(Intent arg0) {
         return null;
     }
+
+    public static String formatDistanceText(double distance) {
+        StringBuilder sb = new StringBuilder();
+        DecimalFormat df = new DecimalFormat("#");
+        double kms = distance / 1000;
+        kms = Double.parseDouble(df.format(kms));
+        double meters = distance % 1000;
+        meters = Double.parseDouble(df.format(meters));
+        if(kms < 1){
+            sb.append("< 1 Km");
+        }else{
+            sb.append(Double.valueOf(kms).intValue());
+            sb.append(" Km");
+        }
+        return sb.toString();
+    }
+
+    public static double calculateBetween(LatLng pointA, LatLng pointB) {
+        long R = 6378137L;
+        double dLat = rad(pointB.latitude - pointA.latitude);
+        double dLong = rad(pointB.longitude - pointA.longitude);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(rad(pointA.latitude)) * Math.cos(rad(pointB.latitude))
+                * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    private static double rad(double lat) {
+            return lat * Math.PI / 180;
+        }
+
 
 }
