@@ -60,7 +60,7 @@ public class TravelFragment extends Fragment {
         uiHelper.finishTravelMonth.setText(TextFormatUtils.formatDateToField(application.travel.getFinishTravel(), "MMM"));
         uiHelper.finishTravelYear.setText(TextFormatUtils.formatDateToField(application.travel.getFinishTravel(), "yyyy"));
 
-        uiHelper.daysRemaining.setText(TextFormatUtils.calculateRemainingDays(application.travel.getFinishTravel(), application.travel.getStartTravel()));
+        uiHelper.daysRemaining.setText(TextFormatUtils.calculateRemainingDays(application.travel.getStartTravel(), application.travel.getFinishTravel()));
         uiHelper.initialMoney.setText(TextFormatUtils.showAsMoney(new BigDecimal(application.travel.getInitialMoney())));
         uiHelper.totalDebits.setText(TextFormatUtils.showAsMoney(application.calculateTotalDebits()));
         uiHelper.currentMoney.setText(TextFormatUtils.showAsMoney(application.calculateCurrentMoney()));

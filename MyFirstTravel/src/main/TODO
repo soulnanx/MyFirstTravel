@@ -1,4 +1,4 @@
-make the field validation
-do not permit add new travel in the travel-fragment
-make feature to create places in the places-fragment
-make feature to show the place list
+do not permit the finish date be less than start date
+make the edit place
+make the edit debit
+when a new debit is added on list, the total debits must be updated

@@ -32,10 +32,10 @@ public class TextFormatUtils {
         long currentDate = c.getTimeInMillis();
         long timeDifInMilliSec;
 
-        if (currentDate > date2){
-            timeDifInMilliSec = currentDate - date2;
+        if (currentDate >= date1){
+            timeDifInMilliSec =  date2 - currentDate;
         } else {
-            timeDifInMilliSec = date1 - date2;
+            timeDifInMilliSec =  date2 - date1;
         }
 
 

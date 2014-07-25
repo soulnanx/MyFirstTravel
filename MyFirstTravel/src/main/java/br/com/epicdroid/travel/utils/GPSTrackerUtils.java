@@ -216,11 +216,11 @@ public class GPSTrackerUtils extends Service implements LocationListener {
         double meters = distance % 1000;
         meters = Double.parseDouble(df.format(meters));
         if(kms < 1){
-            sb.append(Double.valueOf(kms).intValue());
-            sb.append(" M");
+            sb.append(Double.valueOf(meters).intValue());
+            sb.append("m");
         }else{
             sb.append(Double.valueOf(kms).intValue());
-            sb.append(" Km");
+            sb.append("km");
         }
         return sb.toString();
     }
