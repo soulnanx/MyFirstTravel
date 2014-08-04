@@ -43,7 +43,7 @@ public class TravelFragment extends Fragment {
     private void init() {
         uiHelper = new UIHelper(view);
         findTravel();
-        findDebits();
+        application.findDebits();
         setFields();
     }
 
@@ -64,10 +64,6 @@ public class TravelFragment extends Fragment {
         uiHelper.initialMoney.setText(TextFormatUtils.showAsMoney(new BigDecimal(application.travel.getInitialMoney())));
         uiHelper.totalDebits.setText(TextFormatUtils.showAsMoney(application.calculateTotalDebits()));
         uiHelper.currentMoney.setText(TextFormatUtils.showAsMoney(application.calculateCurrentMoney()));
-    }
-
-    private void findDebits() {
-        application.debitList = application.adapter.findAll(Debit.class);
     }
 
     private void findTravel() {

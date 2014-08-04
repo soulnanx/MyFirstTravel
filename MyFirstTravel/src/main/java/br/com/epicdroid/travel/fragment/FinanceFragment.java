@@ -50,11 +50,13 @@ public class FinanceFragment extends Fragment {
         setHasOptionsMenu(true);
 
         uiHelper = new UIHelper(view);
+        application.findDebits();
         setFields();
         setList();
     }
 
     public void setFields() {
+
         uiHelper.listViewDebits = (ListView) view.findViewById(R.id.debit_list);
         uiHelper.listViewDebits.setOnItemLongClickListener(eventOnLongClickDebit());
         uiHelper.listViewDebits.setOnItemClickListener(eventOnClickDebit());
@@ -135,6 +137,8 @@ public class FinanceFragment extends Fragment {
     private void deleteDebit() {
         application.adapter.delete(debitSelected);
         Toast.makeText(getActivity().getBaseContext(), debitSelected.getTitle() + " was deleted!", Toast.LENGTH_LONG).show();
+        application.findDebits();
+        setFields();
         setList();
     }
 

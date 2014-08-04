@@ -6,8 +6,8 @@
     tools:context="br.com.epicdroid.travel.activity.SplashScreenActivity">
 
     <ImageView
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:src="@drawable/traveler"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon"/>
 
 </RelativeLayout>

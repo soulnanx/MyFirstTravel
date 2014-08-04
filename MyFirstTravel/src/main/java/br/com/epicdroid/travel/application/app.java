@@ -66,6 +66,10 @@ public class app extends Application {
         return totalDebits;
     }
 
+    public void findDebits() {
+        debitList = adapter.findAll(Debit.class);
+    }
+
     public boolean isNotTravelSet() {
         try {
             if (adapter.findAll(Travel.class).isEmpty()){
