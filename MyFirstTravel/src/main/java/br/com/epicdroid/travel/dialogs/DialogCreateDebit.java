@@ -58,7 +58,9 @@ public class DialogCreateDebit extends Dialog{
 
     private void createDebit() {
         saveDebit();
+        fragment.setFields();
         fragment.setList();
+
         DialogCreateDebit.this.dismiss();
     }
 

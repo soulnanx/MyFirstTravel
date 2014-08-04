@@ -4,14 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.codeslap.persistence.SqlAdapter;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.application.app;
-import br.com.epicdroid.travel.entity.Travel;
 
 public class SplashScreenActivity extends Activity {
 
@@ -27,7 +22,8 @@ public class SplashScreenActivity extends Activity {
         if (application.isNotTravelSet()){
             navigateTo(CreateTravelActivity.class);
         } else {
-            navigateTo(MainActivity.class);
+//            navigateTo(MainActivity.class);
+            navigateTo(DrawerLayoutMain.class);
         }
     }
 

@@ -11,6 +11,20 @@
     <string name="item_menu_new_debit">+ debit</string>
     <string name="item_menu_show_as_list">Show as List</string>
 
+    <string-array name="item_menu_list">
+        <item>Travel</item>
+        <item>Notes</item>
+        <item>Debits</item>
+        <item>Places</item>
+        <item>Documents</item>
+    </string-array>
+
+    <string name="item_title_travel">Travel</string>
+    <string name="item_title_notes">Notes</string>
+    <string name="item_title_debits">Debits</string>
+    <string name="item_title_places">Places</string>
+    <string name="item_title_documents">Documents</string>
+
 
 
     <!-- COMMONS Dialog -->

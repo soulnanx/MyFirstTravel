@@ -69,7 +69,7 @@ public class DocumentFragment extends Fragment {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 mode.setTitle("1 selected");
-                getActivity().getMenuInflater().inflate(R.menu.context_menu, menu);
+                getActivity().getMenuInflater().inflate(R.menu.context_menu_new, menu);
                 return true;
             }
 
@@ -79,10 +79,6 @@ public class DocumentFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.item_menu_delete:
                         deleteDocument();
-                        mode.finish();
-                        break;
-                    case R.id.item_menu_edit:
-                        updateDocument();
                         mode.finish();
                         break;
                 }
@@ -98,10 +94,6 @@ public class DocumentFragment extends Fragment {
                 docSelected.getTitle() + " was deleted!(" + application.adapter.delete(docSelected) + ")",
                 Toast.LENGTH_LONG).show();
         setList();
-    }
-
-    private void updateDocument() {
-//        new DialogUpdateNote(DocumentFragment.this.getActivity(), DocumentFragment.this, docSelected).show();
     }
 
     private AdapterView.OnItemClickListener eventOnClickDocument() {

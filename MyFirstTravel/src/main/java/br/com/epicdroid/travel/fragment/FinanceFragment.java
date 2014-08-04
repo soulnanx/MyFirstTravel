@@ -54,7 +54,7 @@ public class FinanceFragment extends Fragment {
         setList();
     }
 
-    private void setFields() {
+    public void setFields() {
         uiHelper.listViewDebits = (ListView) view.findViewById(R.id.debit_list);
         uiHelper.listViewDebits.setOnItemLongClickListener(eventOnLongClickDebit());
         uiHelper.listViewDebits.setOnItemClickListener(eventOnClickDebit());
@@ -114,7 +114,7 @@ public class FinanceFragment extends Fragment {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 mode.setTitle("1 selected");
-                getActivity().getMenuInflater().inflate(R.menu.context_menu, menu);
+                getActivity().getMenuInflater().inflate(R.menu.context_menu_new, menu);
                 return true;
             }
 
@@ -124,10 +124,6 @@ public class FinanceFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.item_menu_delete:
                         deleteDebit();
-                        mode.finish();
-                        break;
-                    case R.id.item_menu_edit:
-//                        updateDebit();
                         mode.finish();
                         break;
                 }
