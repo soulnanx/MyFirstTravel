@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.DocumentAdapter;
-import br.com.epicdroid.travel.application.app;
+import br.com.epicdroid.travel.application.Sapp;
 import br.com.epicdroid.travel.dialogs.DialogCreateDocument;
 import br.com.epicdroid.travel.entity.Document;
 import br.com.epicdroid.travel.utils.ImageUtils;
@@ -31,7 +31,7 @@ public class DocumentFragment extends Fragment {
     private ActionMode.Callback mCallback;
     private ActionMode mMode;
     private Document docSelected;
-    private app application;
+    private Sapp application;
 
 
     @Override
@@ -45,7 +45,7 @@ public class DocumentFragment extends Fragment {
 
     private void init() {
         setHasOptionsMenu(true);
-        application = (app) this.getActivity().getApplication();
+        application = (Sapp) this.getActivity().getApplication();
         listViewDocs = (ListView) view.findViewById(R.id.document_list);
         listViewDocs.setOnItemLongClickListener(eventOnLongClickDocument());
         listViewDocs.setOnItemClickListener(eventOnClickDocument());

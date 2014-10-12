@@ -18,7 +18,7 @@
         android:targetSdkVersion="18" />
 
     <application
-        android:name=".application.app"
+        android:name=".application.Sapp"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"

@@ -1,8 +1,10 @@
 package br.com.epicdroid.travel.entity;
 
+import com.parse.ParseObject;
+
 import java.util.Date;
 
-public class Travel {
+public class Travel extends ParseObject{
     private long id;
     private String title;
     private String initialMoney;

@@ -18,7 +18,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Required;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.application.app;
+import br.com.epicdroid.travel.application.Sapp;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.fragment.PlaceFragment;
 import br.com.epicdroid.travel.utils.KeyboardUtils;
@@ -62,7 +62,7 @@ public class DialogCreatePlace extends DialogFragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((app) getActivity().getApplication()).placeFragment.removePinNewPlace();
+                ((Sapp) getActivity().getApplication()).placeFragment.removePinNewPlace();
                 DialogCreatePlace.this.dismiss();
             }
         };
@@ -79,10 +79,10 @@ public class DialogCreatePlace extends DialogFragment {
 
     private void createPlace() {
         savePlace();
-        ((app) getActivity().getApplication()).placeFragment.putPinsMap();
+        ((Sapp) getActivity().getApplication()).placeFragment.putPinsMap();
         LatLng latLng = new LatLng(place.getLatitude(), place.getLongitde());
-        ((app) getActivity().getApplication()).placeFragment.moveCameraMap(latLng, PlaceFragment.ZOOM_CLOSE);
-        ((app) getActivity().getApplication()).placeFragment.removePinNewPlace();
+        ((Sapp) getActivity().getApplication()).placeFragment.moveCameraMap(latLng, PlaceFragment.ZOOM_CLOSE);
+        ((Sapp) getActivity().getApplication()).placeFragment.removePinNewPlace();
         KeyboardUtils.closeSoftKeyBoard(fragment.getActivity(), uiHelper.title);
         DialogCreatePlace.this.dismiss();
     }

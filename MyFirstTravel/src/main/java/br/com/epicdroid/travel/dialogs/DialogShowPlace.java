@@ -5,17 +5,13 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.SqlAdapter;
 
-import java.util.List;
-
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.PlaceAdapter;
-import br.com.epicdroid.travel.application.app;
 import br.com.epicdroid.travel.entity.Place;
 
 public class DialogShowPlace extends DialogFragment {

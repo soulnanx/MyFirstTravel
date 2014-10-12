@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.DebitAdapter;
-import br.com.epicdroid.travel.application.app;
+import br.com.epicdroid.travel.application.Sapp;
 import br.com.epicdroid.travel.dialogs.DialogCreateDebit;
 import br.com.epicdroid.travel.dialogs.DialogShowDebit;
 import br.com.epicdroid.travel.entity.Debit;
@@ -34,7 +34,7 @@ public class FinanceFragment extends Fragment {
     private UIHelper uiHelper;
     private View view;
     private Debit debitSelected;
-    private app application;
+    private Sapp application;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class FinanceFragment extends Fragment {
     }
 
     private void init() {
-        application = (app) getActivity().getApplication();
+        application = (Sapp) getActivity().getApplication();
         setHasOptionsMenu(true);
 
         uiHelper = new UIHelper(view);

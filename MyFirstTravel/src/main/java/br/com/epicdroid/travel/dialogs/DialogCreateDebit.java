@@ -14,7 +14,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Required;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.application.app;
+import br.com.epicdroid.travel.application.Sapp;
 import br.com.epicdroid.travel.entity.Debit;
 import br.com.epicdroid.travel.fragment.FinanceFragment;
 
@@ -24,14 +24,14 @@ public class DialogCreateDebit extends Dialog{
     private SqlAdapter adapter;
     private Context context;
     private FinanceFragment fragment;
-    private app application;
+    private Sapp application;
 
 
     public DialogCreateDebit(Context context, FinanceFragment fragment) {
         super(context);
         this.context = context;
         this.fragment = fragment;
-        application = (app)getContext().getApplicationContext();
+        application = (Sapp)getContext().getApplicationContext();
 
         init();
         initEvents();

@@ -39,7 +39,7 @@ import java.util.List;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.PlaceAdapter;
-import br.com.epicdroid.travel.application.app;
+import br.com.epicdroid.travel.application.Sapp;
 import br.com.epicdroid.travel.asyncTask.AddressToLatLongAsyncTask;
 import br.com.epicdroid.travel.asyncTask.LatLongToAddressAsyncTask;
 import br.com.epicdroid.travel.delegate.DelegateReturnAddress;
@@ -55,7 +55,7 @@ public class PlaceFragment extends Fragment {
     public static final String NAME_TAB = "places";
     private View view;
     private SupportMapFragment mMapFragment;
-    private app application;
+    private Sapp application;
     private GoogleMap map;
     private PlaceFragment fragment;
     private static final String BUNDLE_NEW_PLACE = "place";
@@ -86,7 +86,7 @@ public class PlaceFragment extends Fragment {
         uiHelper = new UIHelper();
         CURRENT_VIEW = VIEW_MAP;
         setHasOptionsMenu(true);
-        application = (app) this.getActivity().getApplication();
+        application = (Sapp) this.getActivity().getApplication();
         uiHelper.placeListView.setOnItemLongClickListener(eventOnLongClickPlace());
         uiHelper.placeListView.setOnItemClickListener(eventOnClickPlace());
         fragment = this;

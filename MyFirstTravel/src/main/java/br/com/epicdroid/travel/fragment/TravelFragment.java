@@ -11,8 +11,7 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.application.app;
-import br.com.epicdroid.travel.entity.Debit;
+import br.com.epicdroid.travel.application.Sapp;
 import br.com.epicdroid.travel.entity.Travel;
 import br.com.epicdroid.travel.utils.TextFormatUtils;
 
@@ -22,13 +21,13 @@ public class TravelFragment extends Fragment {
     public static final String NAME_TAB = "travel";
     private View view;
     private UIHelper uiHelper;
-    private app application;
+    private Sapp application;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        application = (app) getActivity().getApplication();
+        application = (Sapp) getActivity().getApplication();
 
         if (application.isNotTravelSet()) {
             view = inflater.inflate(R.layout.fragment_no_travel, container, false);

@@ -11,11 +11,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import br.com.epicdroid.travel.MyMenuItem;
+import br.com.epicdroid.travel.pojo.MyMenuItem;
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.adapter.MenuAdapter;
 import br.com.epicdroid.travel.fragment.DocumentFragment;

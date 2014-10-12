@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.epicdroid.travel.MyMenuItem;
+import br.com.epicdroid.travel.pojo.MyMenuItem;
 import br.com.epicdroid.travel.R;
 
 public class MenuAdapter extends ArrayAdapter<MyMenuItem> {
@@ -29,7 +29,7 @@ public class MenuAdapter extends ArrayAdapter<MyMenuItem> {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(resource, null);
-            itemHolder = new ItemHolder(convertView, itemMenu);
+            itemHolder = new ItemHolder(convertView);
             convertView.setTag(itemHolder);
         } else {
             itemHolder = (ItemHolder) convertView.getTag();
@@ -38,7 +38,6 @@ public class MenuAdapter extends ArrayAdapter<MyMenuItem> {
         if (itemMenu != null) {
             itemHolder.name.setText(itemMenu.getIdStringResource());
             itemHolder.image.setImageResource(itemMenu.getIdDrawableResource());
-            itemHolder.itemMenu = itemMenu;
         }
 
         return convertView;
@@ -47,10 +46,8 @@ public class MenuAdapter extends ArrayAdapter<MyMenuItem> {
     public class ItemHolder {
         TextView name;
         ImageView image;
-        public MyMenuItem itemMenu;
 
-        ItemHolder(View view, MyMenuItem itemMenu) {
-            this.itemMenu = itemMenu;
+        ItemHolder(View view) {
             this.name = (TextView) view.findViewById(R.id.item_txt_name);
             this.image = (ImageView) view.findViewById(R.id.item_img);
         }

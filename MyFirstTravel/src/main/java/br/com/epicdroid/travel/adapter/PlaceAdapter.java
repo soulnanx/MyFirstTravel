@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.application.app;
+import br.com.epicdroid.travel.application.Sapp;
 import br.com.epicdroid.travel.entity.Place;
 import br.com.epicdroid.travel.utils.GPSTrackerUtils;
 
@@ -63,7 +63,7 @@ public class PlaceAdapter extends ArrayAdapter<Place> {
     }
 
     private String formatDistance(LatLng latLngPlace){
-        app application = (app)getContext().getApplicationContext();
+        Sapp application = (Sapp)getContext().getApplicationContext();
         LatLng latLng = new LatLng(application.gps.getLatitude(), application.gps.getLongitude());
         return GPSTrackerUtils.formatDistanceText(GPSTrackerUtils.calculateBetween(latLngPlace, latLng));
     }

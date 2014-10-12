@@ -6,18 +6,18 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.application.app;
+import br.com.epicdroid.travel.application.Sapp;
 
 public class SplashScreenActivity extends Activity {
 
-    private app application;
+    private Sapp application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        application = (app) getApplication();
+        application = (Sapp) getApplication();
 
         if (application.isNotTravelSet()){
             navigateTo(CreateTravelActivity.class);
