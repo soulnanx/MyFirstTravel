@@ -59,7 +59,7 @@ public class App extends Application {
 
     public BigDecimal calculateCurrentMoney() {
         BigDecimal totalDebits = calculateTotalDebits();
-        BigDecimal initialMoney = new BigDecimal(travel.getInitialMoney());
+        BigDecimal initialMoney = travel.getInitialMoney();
 
         return initialMoney.subtract(totalDebits);
     }

@@ -60,7 +60,7 @@ public class FinanceFragment extends Fragment {
         uiHelper.listViewDebits = (ListView) view.findViewById(R.id.debit_list);
         uiHelper.listViewDebits.setOnItemLongClickListener(eventOnLongClickDebit());
         uiHelper.listViewDebits.setOnItemClickListener(eventOnClickDebit());
-        uiHelper.initialMoney.setText(showAsMoney(new BigDecimal(application.travel.getInitialMoney())));
+        uiHelper.initialMoney.setText(showAsMoney(application.travel.getInitialMoney()));
         uiHelper.totalDebits.setText(showAsMoney(application.calculateTotalDebits()));
         uiHelper.currentMoney.setText(showAsMoney(application.calculateCurrentMoney()));
     }

@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
@@ -60,20 +62,20 @@ public class TravelFragment extends Fragment {
         uiHelper.finishTravelMonth.setText(TextFormatUtils.formatDateToField(application.travel.getFinishTravel(), "MMM"));
         uiHelper.finishTravelYear.setText(TextFormatUtils.formatDateToField(application.travel.getFinishTravel(), "yyyy"));
 
-//        uiHelper.initialMoney.setText(TextFormatUtils.showAsMoney(new BigDecimal(application.travel.getInitialMoney())));
-//        uiHelper.totalDebits.setText(TextFormatUtils.showAsMoney(application.calculateTotalDebits()));
-//        uiHelper.currentMoney.setText(TextFormatUtils.showAsMoney(application.calculateCurrentMoney()));
+        uiHelper.initialMoney.setText(TextFormatUtils.showAsMoney(application.travel.getInitialMoney()));
+        uiHelper.totalDebits.setText(TextFormatUtils.showAsMoney(application.calculateTotalDebits()));
+        uiHelper.currentMoney.setText(TextFormatUtils.showAsMoney(application.calculateCurrentMoney()));
     }
 
     private void findTravel() {
         Travel.findFirstLocal(findFirstCallback());
     }
 
-    private FindCallback<Travel> findFirstCallback() {
-        return new FindCallback<Travel>() {
+    private GetCallback<Travel> findFirstCallback() {
+        return new GetCallback<Travel>() {
             @Override
-            public void done(List<Travel> travels, ParseException e) {
-                application.travel = travels.get(0);
+            public void done(Travel travel, ParseException e) {
+                application.travel = travel;
                 application.findDebits();
                 setFields();
             }

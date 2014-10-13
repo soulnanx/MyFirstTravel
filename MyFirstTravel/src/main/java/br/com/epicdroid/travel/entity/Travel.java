@@ -1,11 +1,13 @@
 package br.com.epicdroid.travel.entity;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @ParseClassName("Travel")
@@ -20,7 +22,7 @@ public class Travel extends ParseObject{
     private static final String FINISH_TRAVEL = "finishTravel";
 
     public void saveLocal(SaveCallback callback){
-        pinInBackground(callback);
+        pinInBackground(TRAVEL_LOCAL, callback);
     }
 
     public static ParseQuery findAllLocal(FindCallback<Travel> callback){
@@ -31,11 +33,11 @@ public class Travel extends ParseObject{
         return query;
     }
 
-    public static ParseQuery findFirstLocal(FindCallback<Travel> callback){
+    public static ParseQuery findFirstLocal(GetCallback<Travel> callback){
         ParseQuery<Travel> query = ParseQuery.getQuery(Travel.class);
         query.fromLocalDatastore();
         query.setLimit(1);
-        query.findInBackground(callback);
+        query.getFirstInBackground(callback);
         return query;
     }
 
@@ -43,8 +45,8 @@ public class Travel extends ParseObject{
         return getString(TITLE);
     }
 
-    public String getInitialMoney() {
-        return getString(INITIAL_MONEY);
+    public BigDecimal getInitialMoney() {
+        return new BigDecimal(getDouble(INITIAL_MONEY));
     }
 
     public Date getStartTravel() {
