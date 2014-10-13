@@ -93,7 +93,7 @@ public class DialogCreateTravel extends Dialog{
 
     private void createDebit() {
         travel.setTitle(uiHelper.title.getText().toString());
-        travel.setInitialMoney(uiHelper.initialMoney.getText().toString());
+        travel.setInitialMoney(new Double(uiHelper.initialMoney.getText().toString()));
 
         adapter.store(travel);
     }

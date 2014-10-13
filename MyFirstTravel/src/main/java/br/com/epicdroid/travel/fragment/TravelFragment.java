@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.application.Sapp;
@@ -29,12 +33,12 @@ public class TravelFragment extends Fragment {
 
         application = (Sapp) getActivity().getApplication();
 
-        if (application.isNotTravelSet()) {
-            view = inflater.inflate(R.layout.fragment_no_travel, container, false);
-        } else {
+//        if (application.isNotTravelSet()) {
+//            view = inflater.inflate(R.layout.fragment_no_travel, container, false);
+//        } else {
             view = inflater.inflate(R.layout.fragment_travel, container, false);
             init();
-        }
+//        }
 
         return view;
     }
@@ -42,8 +46,6 @@ public class TravelFragment extends Fragment {
     private void init() {
         uiHelper = new UIHelper(view);
         findTravel();
-        application.findDebits();
-        setFields();
     }
 
     private void setFields() {
@@ -59,14 +61,24 @@ public class TravelFragment extends Fragment {
         uiHelper.finishTravelMonth.setText(TextFormatUtils.formatDateToField(application.travel.getFinishTravel(), "MMM"));
         uiHelper.finishTravelYear.setText(TextFormatUtils.formatDateToField(application.travel.getFinishTravel(), "yyyy"));
 
-        uiHelper.daysRemaining.setText(TextFormatUtils.calculateRemainingDays(application.travel.getStartTravel(), application.travel.getFinishTravel()));
-        uiHelper.initialMoney.setText(TextFormatUtils.showAsMoney(new BigDecimal(application.travel.getInitialMoney())));
-        uiHelper.totalDebits.setText(TextFormatUtils.showAsMoney(application.calculateTotalDebits()));
-        uiHelper.currentMoney.setText(TextFormatUtils.showAsMoney(application.calculateCurrentMoney()));
+//        uiHelper.initialMoney.setText(TextFormatUtils.showAsMoney(new BigDecimal(application.travel.getInitialMoney())));
+//        uiHelper.totalDebits.setText(TextFormatUtils.showAsMoney(application.calculateTotalDebits()));
+//        uiHelper.currentMoney.setText(TextFormatUtils.showAsMoney(application.calculateCurrentMoney()));
     }
 
     private void findTravel() {
-        application.travel = application.adapter.findFirst(new Travel(1));
+        Travel.findFirstLocal(findFirstCallback());
+    }
+
+    private FindCallback<Travel> findFirstCallback() {
+        return new FindCallback<Travel>() {
+            @Override
+            public void done(List<Travel> travels, ParseException e) {
+                application.travel = travels.get(0);
+                application.findDebits();
+                setFields();
+            }
+        };
     }
 
     public void refresh() {

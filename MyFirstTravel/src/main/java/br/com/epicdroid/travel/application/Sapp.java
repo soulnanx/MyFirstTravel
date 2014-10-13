@@ -8,7 +8,9 @@ import com.codeslap.persistence.DatabaseSpec;
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.PersistenceConfig;
 import com.codeslap.persistence.SqlAdapter;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.math.BigDecimal;
@@ -40,8 +42,9 @@ public class Sapp extends Application {
     public void onCreate() {
         super.onCreate();
         DatabaseSpec database = PersistenceConfig.registerSpec(7);
-        database.match(Note.class, Debit.class, Place.class, Task.class, Travel.class, Document.class);
+        database.match(Note.class, Debit.class, Place.class, Task.class, Document.class);
         init();
+        initParse();
     }
 
     private void init() {
@@ -77,15 +80,6 @@ public class Sapp extends Application {
 
     public void findDebits() {
         debitList = adapter.findAll(Debit.class);
-    }
-
-    public boolean isNotTravelSet() {
-        try {
-            if (adapter.findAll(Travel.class).isEmpty()){
-                return true;
-            }
-        } catch (Exception e){return true;}
-        return false;
     }
 
     public boolean isInternetConnection(Activity activity){

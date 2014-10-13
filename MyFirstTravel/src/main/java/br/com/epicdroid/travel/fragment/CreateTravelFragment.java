@@ -17,6 +17,8 @@ import com.codeslap.persistence.SqlAdapter;
 import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Required;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,9 +45,9 @@ public class CreateTravelFragment extends Fragment {
     }
 
     private void init() {
+        travel = new Travel();
         uiHelper = new UIHelper(view);
         adapter = Persistence.getAdapter(this.getActivity());
-        travel = new Travel();
     }
 
     private void initEvents() {
@@ -83,27 +85,35 @@ public class CreateTravelFragment extends Fragment {
         };
     }
 
-    private void createTravel() {
+    private void createTravel(SaveCallback callback) {
         travel.setTitle(uiHelper.title.getText().toString());
         travel.setInitialMoney(uiHelper.initialMoney.getText().toString());
+        travel.saveLocal(callback);
+    }
 
-        adapter.store(travel);
-        navigateTo(MainActivity.class);
+    private SaveCallback eventSaveCallback() {
+        return new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Toast.makeText(CreateTravelFragment.this.getActivity(), "saved", Toast.LENGTH_SHORT).show();
+                navigateTo(MainActivity.class);
+            }
+        };
     }
 
     private class UIHelper implements Validator.ValidationListener {
         Validator validator;
 
-        @Required(order = 1, message = "it's mandatory =(")
+        @Required(order = 1, messageResId = R.string.mandatory_field)
         EditText title;
 
-        @Required(order = 2, message = "it's mandatory =(")
+        @Required(order = 2, messageResId = R.string.mandatory_field)
         EditText initialMoney;
 
-        @Required(order = 3, message = "it's mandatory =(")
+        @Required(order = 3, messageResId = R.string.mandatory_field)
         TextView startTravel;
 
-        @Required(order = 4, message = "it's mandatory =(")
+        @Required(order = 4, messageResId = R.string.mandatory_field)
         TextView finishTravel;
 
         LinearLayout btnOK;
@@ -120,7 +130,7 @@ public class CreateTravelFragment extends Fragment {
         }
 
         public void onValidationSucceeded() {
-            createTravel();
+            createTravel(eventSaveCallback());
         }
 
         public void onValidationFailed(View failedView, Rule<?> failedRule) {

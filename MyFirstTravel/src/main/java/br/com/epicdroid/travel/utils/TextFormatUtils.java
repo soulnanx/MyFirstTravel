@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class TextFormatUtils {
@@ -18,6 +19,10 @@ public class TextFormatUtils {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(timeMillis);
         return (new SimpleDateFormat(pattern).format(c.getTime()).toUpperCase());
+    }
+
+    public static String formatDateToField(Date date, String pattern) {
+        return formatDateToField(date.getTime(), pattern);
     }
 
     public static String showAsMoney(BigDecimal money){
@@ -37,7 +42,6 @@ public class TextFormatUtils {
         } else {
             timeDifInMilliSec =  date2 - date1;
         }
-
 
         long timeDifDays = timeDifInMilliSec / (24 * 60 * 60 * 1000);
 

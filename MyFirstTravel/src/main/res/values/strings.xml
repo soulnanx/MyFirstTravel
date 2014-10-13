@@ -53,4 +53,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_travel">Input about your travel</string>
 
+    <string name="mandatory_field">It\'s mandatory</string>
+
 </resources>
