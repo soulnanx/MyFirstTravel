@@ -8,14 +8,13 @@ import com.codeslap.persistence.DatabaseSpec;
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.PersistenceConfig;
 import com.codeslap.persistence.SqlAdapter;
-import com.parse.FindCallback;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.constants.ParseConstants;
 import br.com.epicdroid.travel.entity.Document;
 import br.com.epicdroid.travel.entity.Note;
@@ -27,6 +26,7 @@ import br.com.epicdroid.travel.fragment.DocumentFragment;
 import br.com.epicdroid.travel.fragment.PlaceFragment;
 import br.com.epicdroid.travel.utils.AlertDialogManagerUtils;
 import br.com.epicdroid.travel.utils.ConnectionDetectorUtils;
+import br.com.epicdroid.travel.utils.CurrencyUtils;
 import br.com.epicdroid.travel.utils.GPSTrackerUtils;
 
 public class App extends Application {
@@ -42,7 +42,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         DatabaseSpec database = PersistenceConfig.registerSpec(7);
-        database.match(Note.class, Debit.class, Place.class, Task.class, Document.class);
+        database.match(Note.class, Place.class, Task.class, Document.class);
         init();
         initParse();
     }
@@ -60,20 +60,15 @@ public class App extends Application {
     public BigDecimal calculateCurrentMoney() {
         BigDecimal totalDebits = calculateTotalDebits();
         BigDecimal initialMoney = travel.getInitialMoney();
-
         return initialMoney.subtract(totalDebits);
     }
 
     public BigDecimal calculateTotalDebits() {
         BigDecimal totalDebits = new BigDecimal(0);
         for (Debit debit: debitList){
-            if(debit.getValue().isEmpty()
-                    || null == debit.getValue()
-                    || debit.getValue().equals("0")
-                    || debit.getValue().equals("")){
-                continue;
+            if(CurrencyUtils.isHigherThanZero(debit.getValue())){
+                totalDebits = totalDebits.add(debit.getValue()) ;
             }
-            totalDebits = totalDebits.add(new BigDecimal(debit.getValue())) ;
         }
         return totalDebits;
     }
@@ -85,8 +80,11 @@ public class App extends Application {
     public boolean isInternetConnection(Activity activity){
         ConnectionDetectorUtils cd = new ConnectionDetectorUtils(this);
         if (!cd.isConnectingToInternet()) {
-            new AlertDialogManagerUtils().showAlertDialog(activity, "Internet Connection Error",
-                    "Please connect to working Internet connection", false);
+            new AlertDialogManagerUtils().showAlertDialog(
+                    activity,
+                    getResources().getString(R.string.intenet_connect_title_error),
+                    getResources().getString(R.string.intenet_connect_text_error),
+                    false);
             return false;
         }
         return true;
@@ -98,8 +96,10 @@ public class App extends Application {
         if (gps.canGetLocation()) {
             Log.d("Your Location", "latitude:" + gps.getLatitude() + ", longitude: " + gps.getLongitude());
         } else {
-            new AlertDialogManagerUtils().showAlertDialog(activity, "GPS Status",
-                    "Couldn't get location information. Please enable GPS",
+            new AlertDialogManagerUtils().showAlertDialog(
+                    activity,
+                    getResources().getString(R.string.gps_fail_title_error),
+                    getResources().getString(R.string.gps_fail_text_error),
                     false);
             return false;
         }

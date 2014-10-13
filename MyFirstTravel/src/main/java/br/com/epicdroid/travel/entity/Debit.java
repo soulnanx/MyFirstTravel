@@ -1,45 +1,39 @@
 package br.com.epicdroid.travel.entity;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 import java.math.BigDecimal;
 
-public class Debit {
+@ParseClassName("Debit")
+public class Debit extends ParseObject {
 
-    private long id;
-    private String title;
-    private String description;
-    private String value;
-//    private boolean debited;
+    private static final String TITLE = "title";
+    private static final String DESCRIPTION = "description";
+    private static final String VALUE = "value";
 
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
-        return title;
+        return getString(TITLE);
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        put(TITLE, title);
     }
 
-    public String getValue() {
-        return value;
+    public BigDecimal getValue() {
+        return new BigDecimal(getDouble(VALUE));
     }
 
     public void setValue(String value) {
-        this.value = value;
+        put(VALUE, value);
     }
 
     public String getDescription() {
-        return description;
+        return getString(DESCRIPTION);
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        put(DESCRIPTION, description);
     }
 }

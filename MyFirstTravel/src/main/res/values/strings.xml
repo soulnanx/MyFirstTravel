@@ -54,5 +54,9 @@
     <string name="title_activity_create_travel">Input about your travel</string>
 
     <string name="mandatory_field">It\'s mandatory</string>
+    <string name="gps_fail_text_error">Couldn\'t get location information. Please enable GPS</string>
+    <string name="gps_fail_title_error">GPS status</string>
+    <string name="intenet_connect_title_error">Internet Connection Error</string>
+    <string name="intenet_connect_text_error">Please connect to working Internet connection!</string>
 
 </resources>
