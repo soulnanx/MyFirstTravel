@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -12,19 +11,19 @@ import com.parse.ParseException;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.application.Sapp;
+import br.com.epicdroid.travel.application.App;
 import br.com.epicdroid.travel.entity.Travel;
 
 public class SplashScreenActivity extends Activity {
 
-    private Sapp application;
+    private App application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        application = (Sapp) getApplication();
+        application = (App) getApplication();
         Travel.findAllLocal(eventFindTravelCallback());
 
     }

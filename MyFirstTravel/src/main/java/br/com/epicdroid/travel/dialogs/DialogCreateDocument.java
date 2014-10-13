@@ -17,7 +17,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Required;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.application.Sapp;
+import br.com.epicdroid.travel.application.App;
 import br.com.epicdroid.travel.entity.Document;
 import br.com.epicdroid.travel.utils.ImageUtils;
 
@@ -26,7 +26,7 @@ public class DialogCreateDocument extends DialogFragment {
     private static final int RESULT_LOAD_IMAGE = 2;
     private UIHelper uiHelper;
     private View view;
-    private Sapp application;
+    private App application;
     private Document document;
 
     @Override
@@ -39,7 +39,7 @@ public class DialogCreateDocument extends DialogFragment {
 
     private void init() {
         document = new Document();
-        application = (Sapp) this.getActivity().getApplication();
+        application = (App) this.getActivity().getApplication();
         uiHelper = new UIHelper();
         getDialog().setTitle("Create new document");
     }

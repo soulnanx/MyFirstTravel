@@ -29,7 +29,7 @@ import br.com.epicdroid.travel.utils.AlertDialogManagerUtils;
 import br.com.epicdroid.travel.utils.ConnectionDetectorUtils;
 import br.com.epicdroid.travel.utils.GPSTrackerUtils;
 
-public class Sapp extends Application {
+public class App extends Application {
 
     public SqlAdapter adapter;
     public List<Debit> debitList;

@@ -11,11 +11,10 @@ import android.widget.TextView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.epicdroid.travel.R;
-import br.com.epicdroid.travel.application.Sapp;
+import br.com.epicdroid.travel.application.App;
 import br.com.epicdroid.travel.entity.Travel;
 import br.com.epicdroid.travel.utils.TextFormatUtils;
 
@@ -25,13 +24,13 @@ public class TravelFragment extends Fragment {
     public static final String NAME_TAB = "travel";
     private View view;
     private UIHelper uiHelper;
-    private Sapp application;
+    private App application;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        application = (Sapp) getActivity().getApplication();
+        application = (App) getActivity().getApplication();
 
 //        if (application.isNotTravelSet()) {
 //            view = inflater.inflate(R.layout.fragment_no_travel, container, false);
