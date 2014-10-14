@@ -15,8 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 import br.com.epicdroid.travel.R;
@@ -159,7 +163,16 @@ public class FinanceFragment extends Fragment {
     }
 
     public void setList() {
-        uiHelper.listViewDebits.setAdapter(new DebitAdapter(FinanceFragment.this.getActivity(), R.layout.item_debit, application.adapter.findAll(Debit.class)));
+        Debit.findAllLocal(findAllDebitsCallback());
+    }
+
+    private FindCallback<Debit> findAllDebitsCallback() {
+        return new FindCallback<Debit>() {
+            @Override
+            public void done(List<Debit> debits, ParseException e) {
+                uiHelper.listViewDebits.setAdapter(new DebitAdapter(FinanceFragment.this.getActivity(), R.layout.item_debit, debits));
+            }
+        };
     }
 
     private class UIHelper {

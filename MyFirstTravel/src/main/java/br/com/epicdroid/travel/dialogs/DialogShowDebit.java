@@ -46,7 +46,7 @@ public class DialogShowDebit extends Dialog{
     private void setValues(){
         if (null != debit.getDescription()){
             uiHelper.description.setText(debit.getDescription());
-            uiHelper.value.setText(debit.getValue());
+            uiHelper.value.setText(debit.getValue().toString());
         }
     }
 

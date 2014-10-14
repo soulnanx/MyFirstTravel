@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.com.epicdroid.travel.R;
 import br.com.epicdroid.travel.application.App;
+import br.com.epicdroid.travel.entity.Debit;
 import br.com.epicdroid.travel.entity.Travel;
 
 public class SplashScreenActivity extends Activity {
@@ -33,10 +34,23 @@ public class SplashScreenActivity extends Activity {
             @Override
             public void done(List<Travel> travels, ParseException e) {
                     if (travels.isEmpty()){
+
                         navigateTo(CreateTravelActivity.class);
                     } else {
-                        navigateTo(DrawerLayoutMain.class);
+                        application.travel = travels.get(0);
+                        Debit.findAllLocal(findAllDebitCallback());
+
                     }
+            }
+        };
+    }
+
+    private FindCallback<Debit> findAllDebitCallback() {
+        return new FindCallback<Debit>() {
+            @Override
+            public void done(List<Debit> debits, ParseException e) {
+                application.debitList = debits;
+                navigateTo(DrawerLayoutMain.class);
             }
         };
     }

@@ -70,7 +70,8 @@ public class DrawerLayoutMain extends FragmentActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            mListView.setItemChecked(0, true);
+            selectItem(TravelFragment.class.getName());
         }
     }
 
@@ -89,42 +90,16 @@ public class DrawerLayoutMain extends FragmentActivity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+            mListView.setItemChecked(position, true);
+            selectItem(((MyMenuItem)parent.getItemAtPosition(position)).getFragmentName());
         }
     }
 
-    private void selectItem(int position) {
+    private void selectItem(String fragmentName) {
         Bundle args = new Bundle();
-        Fragment fragment = new TravelFragment();
-        switch (position) {
-            case TravelFragment.POSITION:
-                args.putInt(String.valueOf(TravelFragment.POSITION), position);
-                fragment = new TravelFragment();
-                break;
-            case NoteFragment.POSITION:
-                args.putInt(String.valueOf(NoteFragment.POSITION), position);
-                fragment = new NoteFragment();
-                break;
-            case FinanceFragment.POSITION:
-                args.putInt(String.valueOf(FinanceFragment.POSITION), position);
-                fragment = new FinanceFragment();
-                break;
-            case PlaceFragment.POSITION:
-                args.putInt(String.valueOf(PlaceFragment.POSITION), position);
-                fragment = new PlaceFragment();
-                break;
-            case DocumentFragment.POSITION:
-                args.putInt(String.valueOf(DocumentFragment.POSITION), position);
-                fragment = new DocumentFragment();
-                break;
-        }
-
-        fragment.setArguments(args);
+        Fragment fragment = Fragment.instantiate(this, fragmentName, args);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-        mListView.setItemChecked(position, true);
-//        setTitle(item_menu[position]);
         mDrawerLayout.closeDrawer(mDrawerLinear);
     }
 

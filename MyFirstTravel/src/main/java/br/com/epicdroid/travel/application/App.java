@@ -8,7 +8,9 @@ import com.codeslap.persistence.DatabaseSpec;
 import com.codeslap.persistence.Persistence;
 import com.codeslap.persistence.PersistenceConfig;
 import com.codeslap.persistence.SqlAdapter;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.math.BigDecimal;
@@ -74,7 +76,17 @@ public class App extends Application {
     }
 
     public void findDebits() {
-        debitList = adapter.findAll(Debit.class);
+       Debit.findAllLocal(findAllDebitsCallback());
+//       debitList = adapter.findAll(Debit.class);
+    }
+
+    private FindCallback<Debit> findAllDebitsCallback() {
+        return new FindCallback<Debit>() {
+            @Override
+            public void done(List<Debit> debits, ParseException e) {
+                debitList = debits;
+            }
+        };
     }
 
     public boolean isInternetConnection(Activity activity){
