@@ -36,7 +36,6 @@ public class Travel extends ParseObject{
     public static ParseQuery findFirstLocal(GetCallback<Travel> callback){
         ParseQuery<Travel> query = ParseQuery.getQuery(Travel.class);
         query.fromLocalDatastore();
-        query.setLimit(1);
         query.getFirstInBackground(callback);
         return query;
     }
